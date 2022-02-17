@@ -6,7 +6,7 @@ export default function UCSBSubjectsCreatePage() {
       <div className="pt-2">
         <h1>Create new UCSBSubject</h1>
         <p>
-        Temp page for UCSBSubjectsCreatePage
+          Temp page for UCSBSubjectsCreatePage
         </p>
       </div>
     </BasicLayout>

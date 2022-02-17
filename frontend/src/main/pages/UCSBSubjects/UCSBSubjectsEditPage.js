@@ -4,9 +4,9 @@ export default function UCSBSubjectsEditPage() {
   return (
     <BasicLayout>
       <div className="pt-2">
-        <h1>Todos</h1>
+        <h1>Edit UCSBSubject</h1>
         <p>
-          This is where the edit page will go
+        Temp page for UCSBSubjectsCreatePage
         </p>
       </div>
     </BasicLayout>

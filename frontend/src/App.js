@@ -79,8 +79,8 @@ function App() {
           //added by Thomas
           hasRole(currentUser, "ROLE_ADMIN") && (
             <>
-              <Route exact path="/ucsbsubject/list/" element={<UCSBSubjectsIndexPage />}/>
-              <Route exact path="/ucsbsubject/create/" element={<UCSBSubjectsCreatePage />}/>
+              <Route exact path="/ucsbsubject/list" element={<UCSBSubjectsIndexPage />}/>
+              <Route exact path="/ucsbsubject/create" element={<UCSBSubjectsCreatePage />}/>
             </>
           )
         }
@@ -88,7 +88,7 @@ function App() {
           //added by Thomas
           hasRole(currentUser, "ROLE_USER") && (
             <>
-              <Route exact path="/ucsbsubject/list/" element={<UCSBSubjectsIndexPage />}/>
+              <Route exact path="/ucsbsubject/list" element={<UCSBSubjectsIndexPage />}/>
             </>
           )
         }

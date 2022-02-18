@@ -11,7 +11,3 @@ export default {
 const Template = () => <UCSBSubjectsEditPage />;
 
 export const Default = Template.bind({});
-
-
-
-

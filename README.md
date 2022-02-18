@@ -8,12 +8,17 @@
 
 Storybook is here:
 <<<<<<< HEAD
+<<<<<<< HEAD
 * Production: <https://ucsb-cs156-w22.github.io/team03-w22-7pm-3-docs/storybook>
 * QA:  <https://ucsb-cs156-w22.github.io/team03-w22-7pm-3-docs-qa/storybook>
 =======
 * Production: <https://github.com/ucsb-cs156-w22/team03-w22-7pm-3-docs>
 * QA:  <https://github.com/ucsb-cs156-w22/team03-w22-7pm-3-docs-qa>
 >>>>>>> 5ae6001 (Update README.md)
+=======
+* Production: <https://ucsb-cs156-w22.github.io/team03-w22-7pm-3-docs/>
+* QA:  <https://ucsb-cs156-w22.github.io/team03-w22-7pm-3-docs-qa/>
+>>>>>>> 601f10c (The links were correct the first time round)
 
 The GitHub actions script to deploy the Storybook to QA requires some configuration; see [docs/github-actions.md](docs/github-actions.md) for details.
 

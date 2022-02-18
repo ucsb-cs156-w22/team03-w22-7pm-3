@@ -6,7 +6,7 @@ import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/utils/UCSBSubject
 import { useNavigate } from "react-router-dom";
 import { hasRole } from "main/utils/currentUser";
 
-export default function UCSBDatesTable({ subjects, currentUser }) {
+export default function UCSBSubjectsTable({ subjects, currentUser }) {
 
     const navigate = useNavigate();
 
@@ -15,9 +15,10 @@ export default function UCSBDatesTable({ subjects, currentUser }) {
     }
 
     // Stryker disable all : hard to test for query caching
-
+    var g = "";
     const deleteMutation = useBackendMutation(
         cellToAxiosParamsDelete,
+        g,
         { onSuccess: onDeleteSuccess },
         ["/api/ucsbsubjects/all"]
     );
@@ -31,10 +32,6 @@ export default function UCSBDatesTable({ subjects, currentUser }) {
         {
             Header: 'id',
             accessor: 'id', // accessor is the "key" in the data
-        },
-        {
-            Header: 'Inactive',
-            accessor: 'inactive',
         },
         {
             Header: 'SubjectCode',
@@ -55,6 +52,10 @@ export default function UCSBDatesTable({ subjects, currentUser }) {
         {
             Header: 'RelatedDepartmentCode',
             accessor: 'relatedDeptCode',
+        },
+        {
+            Header: 'Inactive',
+            accessor: 'inactive',
         }
     ];
 
@@ -68,7 +69,7 @@ export default function UCSBDatesTable({ subjects, currentUser }) {
     const memoizedSubjects = React.useMemo(() => subjects, [subjects]);
 
     return <OurTable
-        data={memoizedDates}
+        data={memoizedSubjects}
         columns={memoizedColumns}
         testid={"UCSBSubjectsTable"}
     />;

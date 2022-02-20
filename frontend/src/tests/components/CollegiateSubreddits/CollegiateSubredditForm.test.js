@@ -39,28 +39,6 @@ describe("CollegiateSubredditForm tests", () => {
         expect(getByTestId(/CollegiateSubredditForm-id/)).toHaveValue("1");
     });
 
-/*
-    test("Correct Error messsages on bad input", async () => {
-
-        const { getByTestId, getByText } = render(
-            <Router  >
-                <CollegiateSubredditForm />
-            </Router>
-        );
-        await waitFor(() => expect(getByTestId("CollegiateSubredditForm-submit")).toBeInTheDocument());
-        const nameField = getByTestId("CollegiateSubredditForm-name");
-        const locationField = getByTestId("CollegiateSubredditForm-location");
-        const submitButton = getByTestId("CollegiateSubredditForm-submit");
-
-        fireEvent.change(nameField, { target: { value: 'bad-input' } });
-        fireEvent.change(locationField, { target: { value: 'bad-input' } });
-        fireEvent.click(submitButton);
-
-        await waitFor(() => expect(getByText(/Name is required./)).toBeInTheDocument());
-        expect(getByText(/Location is required./)).toBeInTheDocument();
-        expect(getByText(/Subreddit is required./)).toBeInTheDocument();
-    }); */
-
     test("Correct Error messsages on missing input", async () => {
 
         const { getByTestId, getByText } = render(

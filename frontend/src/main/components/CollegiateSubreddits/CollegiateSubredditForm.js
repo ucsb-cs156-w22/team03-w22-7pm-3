@@ -17,11 +17,6 @@ function CollegiateSubredditForm({ initialCollegiateSubreddit, submitAction, but
 
     const navigate = useNavigate();
 
-    const name = String();
-    const location = String();
-    const subreddit = String();
-
-
     return (
 
         <Form onSubmit={handleSubmit(submitAction)}>
@@ -39,22 +34,6 @@ function CollegiateSubredditForm({ initialCollegiateSubreddit, submitAction, but
                     />
                 </Form.Group>
             )}
-
-            {/* <Form.Group className="mb-3" >
-                <Form.Label htmlFor="name">Name</Form.Label>
-                <Form.Control
-                    data-testid="CollegiateSubredditForm-name"
-                    id="name"
-                    type="text"
-                    //isInvalid={Boolean(errors.quarterYYYYQ)}
-                    {...register("name", { required: true, pattern: yyyyq_regex })}
-                />
-                
-                { <Form.Control.Feedback type="invalid">
-                    {errors.quarterYYYYQ && 'QuarterYYYYQ is required. '}
-                    {errors.quarterYYYYQ?.type === 'pattern' && 'QuarterYYYYQ must be in the format YYYYQ, e.g. 20224 for Fall 2022'}
-                </Form.Control.Feedback> }
-            </Form.Group> */}
 
             <Form.Group className="mb-3" >
                 <Form.Label htmlFor="name">Name</Form.Label>

@@ -1,0 +1,126 @@
+import React, {useState} from 'react'
+import { Button, Form } from 'react-bootstrap';
+import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+
+// create placeholder page and import this form into it
+// look at team02 collegiatesubredditentity and see what the variables
+
+
+function CollegiateSubredditForm({ initialCollegiateSubreddit, submitAction, buttonLabel="Create" }) {
+
+    // Stryker disable all
+    const {
+        register,
+        formState: { errors },
+        handleSubmit,
+    } = useForm(
+        { defaultValues: initialCollegiateSubreddit || {}, }
+    );
+    // Stryker enable all
+
+    const navigate = useNavigate();
+
+    const name = String();
+    const location = String();
+    const subreddit = String();
+
+
+    return (
+
+        <Form onSubmit={handleSubmit(submitAction)}>
+
+            {initialCollegiateSubreddit && (
+                <Form.Group className="mb-3" >
+                    <Form.Label htmlFor="id">Id</Form.Label>
+                    <Form.Control
+                        data-testid="CollegiateSubredditForm-id"
+                        id="id"
+                        type="text"
+                        {...register("id")}
+                        value={initialCollegiateSubreddit.id}
+                        disabled
+                    />
+                </Form.Group>
+            )}
+
+            {/* <Form.Group className="mb-3" >
+                <Form.Label htmlFor="name">Name</Form.Label>
+                <Form.Control
+                    data-testid="CollegiateSubredditForm-name"
+                    id="name"
+                    type="text"
+                    //isInvalid={Boolean(errors.quarterYYYYQ)}
+                    {...register("name", { required: true, pattern: yyyyq_regex })}
+                />
+                
+                { <Form.Control.Feedback type="invalid">
+                    {errors.quarterYYYYQ && 'QuarterYYYYQ is required. '}
+                    {errors.quarterYYYYQ?.type === 'pattern' && 'QuarterYYYYQ must be in the format YYYYQ, e.g. 20224 for Fall 2022'}
+                </Form.Control.Feedback> }
+            </Form.Group> */}
+
+            <Form.Group className="mb-3" >
+                <Form.Label htmlFor="name">Name</Form.Label>
+                <Form.Control
+                    data-testid="CollegiateSubredditForm-name"
+                    id="name"
+                    type="text"
+                    isInvalid={Boolean(errors.name)}
+                    {...register("name", {
+                        required: "Name is required."
+                    })}
+                />
+                <Form.Control.Feedback type="invalid">
+                    {errors.name?.message}
+                </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" >
+                <Form.Label htmlFor="location">Location</Form.Label>
+                <Form.Control
+                    data-testid="CollegiateSubredditForm-location"
+                    id="location"
+                    type="text"
+                    isInvalid={Boolean(errors.location)}
+                    {...register("location", { required: true, pattern: isodate_regex })}
+                />
+                <Form.Control.Feedback type="invalid">
+                    {errors.location && 'location is required. '}
+                </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group className="mb-3" >
+                <Form.Label htmlFor="subreddit">Subreddit</Form.Label>
+                <Form.Control
+                    data-testid="CollegiateSubredditForm-subreddit"
+                    id="subreddit"
+                    type="text"
+                    isInvalid={Boolean(errors.subreddit)}
+                    {...register("subreddit", { required: true, pattern: isodate_regex })}
+                />
+                <Form.Control.Feedback type="invalid">
+                    {errors.subreddit && 'subreddit is required. '}
+                </Form.Control.Feedback>
+            </Form.Group>
+
+            <Button
+                type="submit"
+                data-testid="CollegiateSubredditForm-submit"
+            >
+                {buttonLabel}
+            </Button>
+            <Button
+                variant="Secondary"
+                onClick={() => navigate(-1)}
+                data-testid="CollegiateSubredditForm-cancel"
+            >
+                Cancel
+            </Button>
+
+        </Form>
+
+    )
+}
+
+export default CollegiateSubredditForm;

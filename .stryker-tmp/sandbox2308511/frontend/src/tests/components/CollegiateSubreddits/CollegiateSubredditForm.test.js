@@ -97,8 +97,8 @@ describe("CollegiateSubredditForm tests", () => {
         const submitButton = getByTestId("CollegiateSubredditForm-submit");
 
         fireEvent.change(nameField, { target: { value: 'stub' } });
-        fireEvent.change(locationField, { target: { value: 'stub' } });
-        fireEvent.change(subredditField, { target: { value: 'stub' } });
+        fireEvent.change(nameField, { target: { value: 'stub' } });
+        fireEvent.change(localDateTimeField, { target: { value: 'stub' } });
         fireEvent.click(submitButton);
 
         await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());

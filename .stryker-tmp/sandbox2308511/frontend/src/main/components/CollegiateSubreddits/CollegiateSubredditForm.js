@@ -79,7 +79,7 @@ function CollegiateSubredditForm({ initialCollegiateSubreddit, submitAction, but
                     id="location"
                     type="text"
                     isInvalid={Boolean(errors.location)}
-                    {...register("location", { required: true })}
+                    {...register("location", { required: true, pattern: isodate_regex })}
                 />
                 <Form.Control.Feedback type="invalid">
                     {errors.location && 'Location is required.'}
@@ -93,7 +93,7 @@ function CollegiateSubredditForm({ initialCollegiateSubreddit, submitAction, but
                     id="subreddit"
                     type="text"
                     isInvalid={Boolean(errors.subreddit)}
-                    {...register("subreddit", { required: true})}
+                    {...register("subreddit", { required: true, pattern: isodate_regex })}
                 />
                 <Form.Control.Feedback type="invalid">
                     {errors.subreddit && 'Subreddit is required.'}

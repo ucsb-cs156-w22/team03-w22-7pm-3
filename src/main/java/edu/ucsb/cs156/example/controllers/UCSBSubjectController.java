@@ -29,7 +29,7 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @Api(description = "UCSBSubjects")
-@RequestMapping("/api/UCSBSubjects")
+@RequestMapping("/api/ucsbsubjects")
 @RestController
 @Slf4j
 public class UCSBSubjectController extends ApiController {
@@ -56,7 +56,6 @@ public class UCSBSubjectController extends ApiController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/all")
     public Iterable<UCSBSubject> allUsersSubjects() {
-        // loggingService.logMethod();
         Iterable<UCSBSubject> subjects = ucsbSubjectRepository.findAll();
         return subjects;
     }
@@ -71,7 +70,6 @@ public class UCSBSubjectController extends ApiController {
             @ApiParam("College Code: Only 'ENGR' or 'L&S' or 'UCSB'") @RequestParam String collegeCode,
             @ApiParam("Related Department Code") @RequestParam String relatedDeptCode,
             @ApiParam("Inactive") @RequestParam Boolean inactive) {
-        // loggingService.logMethod();
         CurrentUser currentUser = getCurrentUser();
         log.info("currentUser={}", currentUser);
 
@@ -92,7 +90,6 @@ public class UCSBSubjectController extends ApiController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("")
     public ResponseEntity<String> getSubjectByID(@ApiParam("The ID of the UCSBSubject you wish to get") @RequestParam Long id) throws JsonProcessingException {
-        // loggingService.logMethod();
         UCSBSubjectOrError soe = new UCSBSubjectOrError(id);
         
         soe = doesUCSBSubjectExist(soe);
@@ -110,10 +107,6 @@ public class UCSBSubjectController extends ApiController {
     public ResponseEntity<String> putSubjectById(
             @ApiParam("id") @RequestParam Long id,
             @RequestBody @Valid UCSBSubject incomingUCSBSubject) throws JsonProcessingException {
-        // loggingService.logMethod();
-
-        //CurrentUser currentUser = getCurrentUser();
-        //User user = currentUser.getUser();
 
         UCSBSubjectOrError soe = new UCSBSubjectOrError(id);
 
@@ -121,13 +114,6 @@ public class UCSBSubjectController extends ApiController {
         if (soe.error != null) {
             return soe.error;
         }
-
-        /*
-        soe = doesTodoBelongToCurrentUser(soe);
-        if (soe.error != null) {
-            return soe.error;
-        }
-        */
 
         //incomingUCSBSubject.setUser(user);
         ucsbSubjectRepository.save(incomingUCSBSubject);
@@ -171,30 +157,4 @@ public class UCSBSubjectController extends ApiController {
         }
         return soe;
     }
-
-    /**
-     * Pre-conditions: soe.todo is non-null and refers to the todo with id soe.id,
-     * and soe.error is null
-     * 
-     * Post-condition: if UCSBSubject belongs to current user, then error is still null.
-     * Otherwise error is a suitable
-     * return value.
-     */
-    /*
-    public UCSBSubjectOrError doesTodoBelongToCurrentUser(UCSBSubjectOrError soe) {
-        CurrentUser currentUser = getCurrentUser();
-        log.info("currentUser={}", currentUser);
-
-        Long currentUserId = currentUser.getUser().getId();
-        Long ucsbUserId = soe.todo.getUser().getId();
-        log.info("currentUserId={} todoUserId={}", currentUserId, ucsbUserId);
-
-        if (ucsbUserId != currentUserId) {
-            soe.error = ResponseEntity
-                    .badRequest()
-                    .body(String.format("todo with id %d not found", soe.id));
-        }
-        return soe;
-    }
-    */
 }

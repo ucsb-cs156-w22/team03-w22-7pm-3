@@ -82,20 +82,20 @@ function App() {
             </>
           )
         }
+
         {
           //added by Thomas
-          hasRole(currentUser, "ROLE_ADMIN") && (
+          hasRole(currentUser, "ROLE_USER") && (
             <>
-              <Route exact path="/ucsbsubject/list" element={<UCSBSubjectsIndexPage />}/>
-              <Route exact path="/ucsbsubject/create" element={<UCSBSubjectsCreatePage />}/>
+              <Route exact path="/ucsbsubjects/list" element={<UCSBSubjectsIndexPage />}/>
             </>
           )
         }
         {
           //added by Thomas
-          hasRole(currentUser, "ROLE_USER") && (
+          hasRole(currentUser, "ROLE_ADMIN") && (
             <>
-              <Route exact path="/ucsbsubject/list" element={<UCSBSubjectsIndexPage />}/>
+              <Route exact path="/ucsbsubjects/create" element={<UCSBSubjectsCreatePage />}/>
             </>
           )
         }

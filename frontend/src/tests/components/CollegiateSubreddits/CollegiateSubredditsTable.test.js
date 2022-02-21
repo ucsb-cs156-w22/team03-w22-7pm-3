@@ -90,7 +90,7 @@ describe("UserTable tests", () => {
   
       expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
       expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
-  
+      expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("3");
       const editButton = getByTestId(`${testId}-cell-row-0-col-Edit-button`);
       expect(editButton).toBeInTheDocument();
       expect(editButton).toHaveClass("btn-primary");

@@ -8,7 +8,6 @@
         "html"
     ],
     "dryRunTimeoutMinutes": 45,
-    "timeoutMs": 5000,
     "coverageAnalysis": "off",
     "jest": {
         "projectType": "create-react-app"

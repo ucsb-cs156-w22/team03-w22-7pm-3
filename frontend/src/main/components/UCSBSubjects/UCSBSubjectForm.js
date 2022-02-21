@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 
-function UCSBSubjectsForm({ initialUCSBSubject, submitAction, buttonLabel="Create" }) {
+function UCSBSubjectForm({ initialUCSBSubject, submitAction, buttonLabel="Create" }) {
 
     // Stryker disable all
     const {
@@ -28,7 +28,7 @@ function UCSBSubjectsForm({ initialUCSBSubject, submitAction, buttonLabel="Creat
                 <Form.Group className="mb-3" >
                     <Form.Label htmlFor="id">Id</Form.Label>
                     <Form.Control
-                        data-testid="UCSBSubjectsForm-id"
+                        data-testid="UCSBSubjectForm-id"
                         id="id"
                         type="text"
                         {...register("id")}
@@ -41,7 +41,7 @@ function UCSBSubjectsForm({ initialUCSBSubject, submitAction, buttonLabel="Creat
             <Form.Group className="mb-3" >
                 <Form.Label htmlFor="subjectCode">Subject Code</Form.Label>
                 <Form.Control
-                    data-testid="UCSBSubjectsForm-subjectCode"
+                    data-testid="UCSBSubjectForm-subjectCode"
                     id="subjectCode"
                     type="text"
                     isInvalid={Boolean(errors.subjectCode)}
@@ -55,7 +55,7 @@ function UCSBSubjectsForm({ initialUCSBSubject, submitAction, buttonLabel="Creat
             <Form.Group className="mb-3" >
                 <Form.Label htmlFor="subjectTranslation">Subject Translation</Form.Label>
                 <Form.Control
-                    data-testid="UCSBSubjectsForm-subjectTranslation"
+                    data-testid="UCSBSubjectForm-subjectTranslation"
                     id="subjectTranslation"
                     type="text"
                     isInvalid={Boolean(errors.subjectTranslation)}
@@ -71,7 +71,7 @@ function UCSBSubjectsForm({ initialUCSBSubject, submitAction, buttonLabel="Creat
             <Form.Group className="mb-3" >
                 <Form.Label htmlFor="deptCode">Department Code</Form.Label>
                 <Form.Control
-                    data-testid="UCSBSubjectsForm-deptCode"
+                    data-testid="UCSBSubjectForm-deptCode"
                     id="deptCode"
                     type="text"
                     isInvalid={Boolean(errors.deptCode)}
@@ -83,16 +83,16 @@ function UCSBSubjectsForm({ initialUCSBSubject, submitAction, buttonLabel="Creat
             </Form.Group>
 
             <Form.Group className="mb-3" >
-                <Form.Label htmlFor="CollegeCode">College Code</Form.Label>
+                <Form.Label htmlFor="collegeCode">College Code</Form.Label>
                 <Form.Control
-                    data-testid="UCSBSubjectsForm-CollegeCode"
-                    id="CollegeCode"
+                    data-testid="UCSBSubjectForm-collegeCode"
+                    id="collegeCode"
                     type="text"
-                    isInvalid={Boolean(errors.CollegeCode)}
-                    {...register("CollegeCode", { required: "College Code is required." })}
+                    isInvalid={Boolean(errors.collegeCode)}
+                    {...register("collegeCode", { required: "collegeCode is required." })}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.CollegeCode && 'College Code is required. '}
+                    {errors.collegeCode && 'College Code is required. '}
                 </Form.Control.Feedback>
             </Form.Group>
 
@@ -100,7 +100,7 @@ function UCSBSubjectsForm({ initialUCSBSubject, submitAction, buttonLabel="Creat
             <Form.Group className="mb-3" >
                 <Form.Label htmlFor="relatedDeptCode">Related Department Code</Form.Label>
                 <Form.Control
-                    data-testid="UCSBSubjectsForm-relatedDeptCode"
+                    data-testid="UCSBSubjectForm-relatedDeptCode"
                     id="relatedDeptCode"
                     type="text"
                     isInvalid={Boolean(errors.relatedDeptCode)}
@@ -115,7 +115,7 @@ function UCSBSubjectsForm({ initialUCSBSubject, submitAction, buttonLabel="Creat
             <Form.Group className="mb-3" >
                 <Form.Label htmlFor="inactive">Inactive</Form.Label>
                 <Form.Control
-                    data-testid="UCSBSubjectsForm-inactive"
+                    data-testid="UCSBSubjectForm-inactive"
                     id="inactive"
                     type="text"
                     isInvalid={Boolean(errors.inactive)}
@@ -131,14 +131,14 @@ function UCSBSubjectsForm({ initialUCSBSubject, submitAction, buttonLabel="Creat
 
             <Button
                 type="submit"
-                data-testid="UCSBSubjectsForm-submit"
+                data-testid="UCSBSubjectForm-submit"
             >
                 {buttonLabel}
             </Button>
             <Button
                 variant="Secondary"
                 onClick={() => navigate(-1)}
-                data-testid="UCSBSubjectsForm-cancel"
+                data-testid="UCSBSubjectForm-cancel"
             >
                 Cancel
             </Button>
@@ -148,4 +148,4 @@ function UCSBSubjectsForm({ initialUCSBSubject, submitAction, buttonLabel="Creat
     )
 }
 
-export default UCSBSubjectsForm;
+export default UCSBSubjectForm;

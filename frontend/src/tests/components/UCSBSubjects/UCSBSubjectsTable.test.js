@@ -76,7 +76,7 @@ describe("UserTable tests", () => {
     );
 
     const expectedHeaders = ["id", "SubjectCode", "SubjectTranslation", "DepartmentCode","CollegeCode","RelatedDepartmentCode","Inactive"];
-    const expectedFields = ["id", "subjectCode", "subjectTranslation", "deptCode","CollegeCode","relatedDeptCode","inactive"];
+    const expectedFields = ["id", "subjectCode", "subjectTranslation", "deptCode","collegeCode","relatedDeptCode","inactive"];
     const testId = "UCSBSubjectsTable";
 
     expectedHeaders.forEach((headerText) => {

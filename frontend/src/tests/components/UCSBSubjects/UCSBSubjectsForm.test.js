@@ -1,5 +1,5 @@
 import { render, waitFor, fireEvent } from "@testing-library/react";
-import UCSBSubjectsForm from "main/components/UCSBSubjects/UCSBSubjectsForm";
+import UCSBSubjectForm from "main/components/UCSBSubjects/UCSBSubjectForm";
 import { ucsbSubjectsFixtures } from "fixtures/ucsbSubjectsFixtures";
 import { BrowserRouter as Router } from "react-router-dom";
 
@@ -11,13 +11,13 @@ jest.mock('react-router-dom', () => ({
 }));
 
 
-describe("UCSBSubjectsForm tests", () => {
+describe("UCSBSubjectForm tests", () => {
 
     test("renders correctly ", async () => {
 
         const { getByText } = render(
             <Router  >
-                <UCSBSubjectsForm />
+                <UCSBSubjectForm />
             </Router>
         );
         await waitFor(() => expect(getByText(/Subject Code/)).toBeInTheDocument());
@@ -29,12 +29,12 @@ describe("UCSBSubjectsForm tests", () => {
 
         const { getByText, getByTestId } = render(
             <Router  >
-                <UCSBSubjectsForm initialUCSBSubject={ucsbSubjectsFixtures.oneSubject} />
+                <UCSBSubjectForm initialUCSBSubject={ucsbSubjectsFixtures.oneSubject} />
             </Router>
         );
-        await waitFor(() => expect(getByTestId(/UCSBSubjectsForm-id/)).toBeInTheDocument());
+        await waitFor(() => expect(getByTestId(/UCSBSubjectForm-id/)).toBeInTheDocument());
         expect(getByText(/Id/)).toBeInTheDocument();
-        expect(getByTestId(/UCSBSubjectsForm-id/)).toHaveValue("1");
+        expect(getByTestId(/UCSBSubjectForm-id/)).toHaveValue("1");
     });
 
 
@@ -42,13 +42,13 @@ describe("UCSBSubjectsForm tests", () => {
 
         const { getByTestId, getByText } = render(
             <Router  >
-                <UCSBSubjectsForm />
+                <UCSBSubjectForm />
             </Router>
         );
-        await waitFor(() => expect(getByTestId("UCSBSubjectsForm-inactive")).toBeInTheDocument());
-        const inactiveField = getByTestId("UCSBSubjectsForm-inactive");
+        await waitFor(() => expect(getByTestId("UCSBSubjectForm-inactive")).toBeInTheDocument());
+        const inactiveField = getByTestId("UCSBSubjectForm-inactive");
 
-        const submitButton = getByTestId("UCSBSubjectsForm-submit");
+        const submitButton = getByTestId("UCSBSubjectForm-submit");
 
         fireEvent.change(inactiveField, { target: { value: 'bad-input' } });
 
@@ -62,11 +62,11 @@ describe("UCSBSubjectsForm tests", () => {
 
         const { getByTestId, getByText } = render(
             <Router  >
-                <UCSBSubjectsForm />
+                <UCSBSubjectForm />
             </Router>
         );
-        await waitFor(() => expect(getByTestId("UCSBSubjectsForm-submit")).toBeInTheDocument());
-        const submitButton = getByTestId("UCSBSubjectsForm-submit");
+        await waitFor(() => expect(getByTestId("UCSBSubjectForm-submit")).toBeInTheDocument());
+        const submitButton = getByTestId("UCSBSubjectForm-submit");
 
         fireEvent.click(submitButton);
 
@@ -85,23 +85,23 @@ describe("UCSBSubjectsForm tests", () => {
 
         const { getByTestId, queryByText } = render(
             <Router  >
-                <UCSBSubjectsForm submitAction={mockSubmitAction} />
+                <UCSBSubjectForm submitAction={mockSubmitAction} />
             </Router>
         );
-        await waitFor(() => expect(getByTestId("UCSBSubjectsForm-subjectCode")).toBeInTheDocument());
+        await waitFor(() => expect(getByTestId("UCSBSubjectForm-subjectCode")).toBeInTheDocument());
 
-        const subjectCodeField = getByTestId("UCSBSubjectsForm-subjectCode");
-        const subjectTranslationField = getByTestId("UCSBSubjectsForm-subjectTranslation");
-        const deptCodeField = getByTestId("UCSBSubjectsForm-deptCode");
-        const CollegeCodeField = getByTestId("UCSBSubjectsForm-CollegeCode");
-        const relatedDeptCodeField = getByTestId("UCSBSubjectsForm-relatedDeptCode");
-        const inactiveField = getByTestId("UCSBSubjectsForm-inactive");
-        const submitButton = getByTestId("UCSBSubjectsForm-submit");
+        const subjectCodeField = getByTestId("UCSBSubjectForm-subjectCode");
+        const subjectTranslationField = getByTestId("UCSBSubjectForm-subjectTranslation");
+        const deptCodeField = getByTestId("UCSBSubjectForm-deptCode");
+        const collegeCodeField = getByTestId("UCSBSubjectForm-collegeCode");
+        const relatedDeptCodeField = getByTestId("UCSBSubjectForm-relatedDeptCode");
+        const inactiveField = getByTestId("UCSBSubjectForm-inactive");
+        const submitButton = getByTestId("UCSBSubjectForm-submit");
 
         fireEvent.change(subjectCodeField, { target: { value: 'ANTH' } });
         fireEvent.change(subjectTranslationField, { target: { value: 'Anthropology' } });
         fireEvent.change(deptCodeField, { target: { value: 'ANTH' } });
-        fireEvent.change(CollegeCodeField, { target: { value: 'L&S' } });
+        fireEvent.change(collegeCodeField, { target: { value: 'L&S' } });
         fireEvent.change(relatedDeptCodeField, { target: { value: null } });
         fireEvent.change(inactiveField, { target: { value: false } });
         fireEvent.click(submitButton);
@@ -117,11 +117,11 @@ describe("UCSBSubjectsForm tests", () => {
 
         const { getByTestId } = render(
             <Router  >
-                <UCSBSubjectsForm />
+                <UCSBSubjectForm />
             </Router>
         );
-        await waitFor(() => expect(getByTestId("UCSBSubjectsForm-cancel")).toBeInTheDocument());
-        const cancelButton = getByTestId("UCSBSubjectsForm-cancel");
+        await waitFor(() => expect(getByTestId("UCSBSubjectForm-cancel")).toBeInTheDocument());
+        const cancelButton = getByTestId("UCSBSubjectForm-cancel");
 
         fireEvent.click(cancelButton);
 

@@ -55,8 +55,8 @@ public class UCSBSubjectControllerTests extends ControllerTestCase {
     @WithMockUser(roles = { "USER" })
     @Test
     public void api_UCSBSubject_all__user_logged_in__returns_UCSBSubjects_for_user() throws Exception {
-        UCSBSubject s1 = UCSBSubject.builder().subjectCode("testSubjectCode").subjectTranslation("testSubjectTranslation").deptCode("testDeptCode").CollegeCode("testCollegeCode").relatedDeptCode("testRelatedDeptCode").inactive(true).build();
-        UCSBSubject s2 = UCSBSubject.builder().subjectCode("testSubjectCode2").subjectTranslation("testSubjectTranslation2").deptCode("testDeptCode2").CollegeCode("testCollegeCode2").relatedDeptCode("testRelatedDeptCode2").inactive(true).build();
+        UCSBSubject s1 = UCSBSubject.builder().subjectCode("testSubjectCode").subjectTranslation("testSubjectTranslation").deptCode("testDeptCode").collegeCode("testcollegeCode").relatedDeptCode("testRelatedDeptCode").inactive(true).build();
+        UCSBSubject s2 = UCSBSubject.builder().subjectCode("testSubjectCode2").subjectTranslation("testSubjectTranslation2").deptCode("testDeptCode2").collegeCode("testcollegeCode2").relatedDeptCode("testRelatedDeptCode2").inactive(true).build();
         ArrayList<UCSBSubject> expectedUCSBSubjects = new ArrayList<>();
         expectedUCSBSubjects.addAll(Arrays.asList(s1,s2));
         when(ucsbSubjectRepository.findAll()).thenReturn(expectedUCSBSubjects);
@@ -72,10 +72,10 @@ public class UCSBSubjectControllerTests extends ControllerTestCase {
     @WithMockUser(roles = { "USER" })
     @Test
     public void api_UCSBSubject_post__user_logged_in() throws Exception {
-        UCSBSubject expectedUCSBSubject = UCSBSubject.builder().subjectCode("testSubjectCode").subjectTranslation("testSubjectTranslation").deptCode("testDeptCode").CollegeCode("testCollegeCode").relatedDeptCode("testRelatedDeptCode").inactive(true).build();
+        UCSBSubject expectedUCSBSubject = UCSBSubject.builder().subjectCode("testSubjectCode").subjectTranslation("testSubjectTranslation").deptCode("testDeptCode").collegeCode("testcollegeCode").relatedDeptCode("testRelatedDeptCode").inactive(true).build();
         when(ucsbSubjectRepository.save(eq(expectedUCSBSubject))).thenReturn(expectedUCSBSubject);
         
-        MvcResult response = mockMvc.perform(post("/api/ucsbsubjects/post?collegeCode=testCollegeCode&deptCode=testDeptCode&inactive=true&relatedDeptCode=testRelatedDeptCode&subjectCode=testSubjectCode&subjectTranslation=testSubjectTranslation").with(csrf())).andExpect(status().isOk()).andReturn();
+        MvcResult response = mockMvc.perform(post("/api/ucsbsubjects/post?collegeCode=testcollegeCode&deptCode=testDeptCode&inactive=true&relatedDeptCode=testRelatedDeptCode&subjectCode=testSubjectCode&subjectTranslation=testSubjectTranslation").with(csrf())).andExpect(status().isOk()).andReturn();
         
         verify(ucsbSubjectRepository,times(1)).save(expectedUCSBSubject);
         String expectedJSON = mapper.writeValueAsString(expectedUCSBSubject);
@@ -87,7 +87,7 @@ public class UCSBSubjectControllerTests extends ControllerTestCase {
     @Test
     public void api_UCSBSubject__user_logged_in__search_for_UCSBSubject() throws Exception {
         
-        UCSBSubject ucsbSubject = UCSBSubject.builder().subjectCode("testSubjectCode").subjectTranslation("testSubjectTranslation").deptCode("testDeptCode").CollegeCode("testCollegeCode").relatedDeptCode("testRelatedDeptCode").inactive(true).id(123L).build();
+        UCSBSubject ucsbSubject = UCSBSubject.builder().subjectCode("testSubjectCode").subjectTranslation("testSubjectTranslation").deptCode("testDeptCode").collegeCode("testcollegeCode").relatedDeptCode("testRelatedDeptCode").inactive(true).id(123L).build();
         when(ucsbSubjectRepository.findById(eq(123L))).thenReturn(Optional.of(ucsbSubject));
 
         MvcResult response = mockMvc.perform(get("/api/ucsbsubjects?id=123")).andExpect(status().isOk()).andReturn();
@@ -119,13 +119,13 @@ public class UCSBSubjectControllerTests extends ControllerTestCase {
         
         // User u = currentUserService.getCurrentUser().getUser();
         // User otherUser = User.builder().id(999).build();
-        UCSBSubject ucsbSubject1 = UCSBSubject.builder().subjectCode("testSubjectCode 1").subjectTranslation("testSubjectTranslation 1").deptCode("testDeptCode 1").CollegeCode("testCollegeCode").relatedDeptCode("testRelatedDeptCode").id(123L).build();
+        UCSBSubject ucsbSubject1 = UCSBSubject.builder().subjectCode("testSubjectCode 1").subjectTranslation("testSubjectTranslation 1").deptCode("testDeptCode 1").collegeCode("testcollegeCode").relatedDeptCode("testRelatedDeptCode").id(123L).build();
         
         // // We deliberately set the user information to another user
         // This shoudl get ignored and overwritten with currrent user when todo is saved
 
-        UCSBSubject updatedUCSBSubject = UCSBSubject.builder().subjectCode("testSubjectCode").subjectTranslation("testSubjectTranslation").deptCode("testDeptCode").CollegeCode("testCollegeCode").relatedDeptCode("testRelatedDeptCode").id(123L).build();
-        UCSBSubject correctUCSBSubject = UCSBSubject.builder().subjectCode("testSubjectCode").subjectTranslation("testSubjectTranslation").deptCode("testDeptCode").CollegeCode("testCollegeCode").relatedDeptCode("testRelatedDeptCode").id(123L).build();
+        UCSBSubject updatedUCSBSubject = UCSBSubject.builder().subjectCode("testSubjectCode").subjectTranslation("testSubjectTranslation").deptCode("testDeptCode").collegeCode("testcollegeCode").relatedDeptCode("testRelatedDeptCode").id(123L).build();
+        UCSBSubject correctUCSBSubject = UCSBSubject.builder().subjectCode("testSubjectCode").subjectTranslation("testSubjectTranslation").deptCode("testDeptCode").collegeCode("testcollegeCode").relatedDeptCode("testRelatedDeptCode").id(123L).build();
 
         String requestBody = mapper.writeValueAsString(updatedUCSBSubject);
         String expectedReturn = mapper.writeValueAsString(correctUCSBSubject);
@@ -152,7 +152,7 @@ public class UCSBSubjectControllerTests extends ControllerTestCase {
     @WithMockUser(roles = { "USER" })
     @Test
     public void api_UCSBSubject__user_logged_in__delete_UCSBSubject() throws Exception {
-        UCSBSubject ucsbSubject = UCSBSubject.builder().subjectCode("testSubjectCode").subjectTranslation("testSubjectTranslation").deptCode("testDeptCode").CollegeCode("testCollegeCode").relatedDeptCode("testRelatedDeptCode").inactive(true).id(123L).build();
+        UCSBSubject ucsbSubject = UCSBSubject.builder().subjectCode("testSubjectCode").subjectTranslation("testSubjectTranslation").deptCode("testDeptCode").collegeCode("testcollegeCode").relatedDeptCode("testRelatedDeptCode").inactive(true).id(123L).build();
         when(ucsbSubjectRepository.findById(eq(123L))).thenReturn(Optional.of(ucsbSubject));
 
         MvcResult response =  mockMvc.perform(
@@ -173,7 +173,7 @@ public class UCSBSubjectControllerTests extends ControllerTestCase {
 
         //UCSBSubject updatedUCSBSubject = UCSBSubject.builder().title("New Title").details("New Details").done(true).id(123L).build();
         UCSBSubject updatedUCSBSubject = UCSBSubject
-        .builder().subjectCode("testSubjectCode").subjectTranslation("testSubjectTranslation").deptCode("testDeptCode").CollegeCode("testCollegeCode").relatedDeptCode("testRelatedDeptCode").id(123L).build();
+        .builder().subjectCode("testSubjectCode").subjectTranslation("testSubjectTranslation").deptCode("testDeptCode").collegeCode("testcollegeCode").relatedDeptCode("testRelatedDeptCode").id(123L).build();
 
         String requestBody = mapper.writeValueAsString(updatedUCSBSubject);
 

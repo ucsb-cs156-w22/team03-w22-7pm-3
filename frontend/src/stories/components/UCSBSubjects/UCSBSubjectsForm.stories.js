@@ -1,17 +1,17 @@
 import React from 'react';
 
-import UCSBSubjectsForm from "main/components/UCSBSubjects/UCSBSubjectsForm"
+import UCSBSubjectForm from "main/components/UCSBSubjects/UCSBSubjectForm"
 import { ucsbSubjectsFixtures } from 'fixtures/ucsbSubjectsFixtures';
 
 export default {
-    title: 'components/UCSBSubjects/UCSBSubjectsForm',
-    component: UCSBSubjectsForm
+    title: 'components/UCSBSubjects/UCSBSubjectForm',
+    component: UCSBSubjectForm
 };
 
 
 const Template = (args) => {
     return (
-        <UCSBSubjectsForm {...args} />
+        <UCSBSubjectForm {...args} />
     )
 };
 

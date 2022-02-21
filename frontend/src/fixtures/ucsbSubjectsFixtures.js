@@ -4,7 +4,7 @@ const ucsbSubjectsFixtures = {
         "subjectCode": "ANTH",
         "subjectTranslation": "Anthropology",
         "deptCode": "ANTH",
-        "CollegeCode": "L&S",
+        "collegeCode": "L&S",
         "relatedDeptCode": null,
         "inactive": false
       },
@@ -14,7 +14,7 @@ const ucsbSubjectsFixtures = {
             "subjectCode": "ART CS",
             "subjectTranslation": "Art (Creative Studies)",
             "deptCode": "CRSTU",
-            "CollegeCode": "CRST",
+            "collegeCode": "CRST",
             "relatedDeptCode": null,
             "inactive": false
           },
@@ -23,7 +23,7 @@ const ucsbSubjectsFixtures = {
             "subjectCode": "ARTHI",
             "subjectTranslation": "Art History",
             "deptCode": "ARTHI",
-            "CollegeCode": "L&S",
+            "collegeCode": "L&S",
             "relatedDeptCode": null,
             "inactive": false
           },
@@ -32,7 +32,7 @@ const ucsbSubjectsFixtures = {
             "subjectCode": "ARTST",
             "subjectTranslation": "Art Studio",
             "deptCode": "ART",
-            "CollegeCode": "L&S",
+            "collegeCode": "L&S",
             "relatedDeptCode": null,
             "inactive": false
           }

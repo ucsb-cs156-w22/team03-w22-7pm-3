@@ -16,11 +16,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Feature {
+public class EarthquakeMetadata {
     @Id
     private String _id;
 
-    private String type;
-    private FeatureProperties properties;
-    private String id;
-} 
+    private long generated;
+    private String url;
+    private String title;
+    private int status;
+    private String api;
+    private int count;
+}

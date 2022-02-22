@@ -16,11 +16,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class FeatureProperties {
+public class EarthquakeFeatureProperties {
     @Id
     private String _id;
 
-    private float mag;
+    private double mag;
     private String place;
     private long time;
     private long updated;
@@ -28,8 +28,8 @@ public class FeatureProperties {
     private String url;
     private String detail;
     private int felt;
-    private float cdi;
-    private float mmi;
+    private double cdi;
+    private double mmi;
     private String status;
     private int tsunami;
     private int sig;
@@ -39,9 +39,9 @@ public class FeatureProperties {
     private String sources;
     private String types;
     private int nst;
-    private float dmin;
-    private float rms;
-    private float gap;
+    private double dmin;
+    private double rms;
+    private double gap;
     private String magType;
     private String type;
     private String title;

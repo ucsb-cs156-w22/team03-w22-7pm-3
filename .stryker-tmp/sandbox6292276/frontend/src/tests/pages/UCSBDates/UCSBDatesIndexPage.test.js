@@ -1,12 +1,12 @@
 import { fireEvent, render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
-import CollegiateSubredditsIndexPage from "main/pages/CollegiateSubreddits/CollegiateSubredditsIndexPage";
+import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
 
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import { studentFixtures, collegiateSubredditsFixtures } from "fixtures/collegiateSubredditsFixtures";
+import { ucsbDatesFixtures } from "fixtures/ucsbDatesFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import mockConsole from "jest-mock-console";
@@ -22,11 +22,11 @@ jest.mock('react-toastify', () => {
     };
 });
 
-describe("CollegiateSubredditsIndexPage tests", () => {
+describe("UCSBDatesIndexPage tests", () => {
 
     const axiosMock =new AxiosMockAdapter(axios);
 
-    const testId = "CollegiateSubredditsTable";
+    const testId = "UCSBDatesTable";
 
     const setupUserOnly = () => {
         axiosMock.reset();
@@ -45,12 +45,12 @@ describe("CollegiateSubredditsIndexPage tests", () => {
     test("renders without crashing for regular user", () => {
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/collegiate_subreddits/all").reply(200, []);
+        axiosMock.onGet("/api/ucsbdates/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <CollegiateSubredditsIndexPage />
+                    <UCSBDatesIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -61,12 +61,12 @@ describe("CollegiateSubredditsIndexPage tests", () => {
     test("renders without crashing for admin user", () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/collegiate_subreddits/all").reply(200, []);
+        axiosMock.onGet("/api/ucsbdates/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <CollegiateSubredditsIndexPage />
+                    <UCSBDatesIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -74,15 +74,15 @@ describe("CollegiateSubredditsIndexPage tests", () => {
 
     });
 
-    test("renders three subreddits without crashing for regular user", async () => {
+    test("renders three dates without crashing for regular user", async () => {
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/collegiate_subreddits/all").reply(200, collegiateSubredditsFixtures.threeSubreddits);
+        axiosMock.onGet("/api/ucsbdates/all").reply(200, ucsbDatesFixtures.threeDates);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <CollegiateSubredditsIndexPage />
+                    <UCSBDatesIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -93,15 +93,15 @@ describe("CollegiateSubredditsIndexPage tests", () => {
 
     });
 
-    test("renders three subreddits without crashing for admin user", async () => {
+    test("renders three dates without crashing for admin user", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/collegiate_subreddits/all").reply(200, ucsbDatesFixtures.threeDates);
+        axiosMock.onGet("/api/ucsbdates/all").reply(200, ucsbDatesFixtures.threeDates);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <CollegiateSubredditsIndexPage />
+                    <UCSBDatesIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -116,14 +116,14 @@ describe("CollegiateSubredditsIndexPage tests", () => {
         setupUserOnly();
 
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/collegiate_subreddits/all").timeout();
+        axiosMock.onGet("/api/ucsbdates/all").timeout();
 
         const restoreConsole = mockConsole();
 
         const { queryByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <CollegiateSubredditsIndexPage />
+                    <UCSBDatesIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -131,7 +131,7 @@ describe("CollegiateSubredditsIndexPage tests", () => {
         await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1); });
 
         const errorMessage = console.error.mock.calls[0][0];
-        expect(errorMessage).toMatch("Error communicating with backend via GET on /api/collegiate_subreddits/all");
+        expect(errorMessage).toMatch("Error communicating with backend via GET on /api/ucsbdates/all");
         restoreConsole();
 
         expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
@@ -141,14 +141,14 @@ describe("CollegiateSubredditsIndexPage tests", () => {
         setupAdminUser();
 
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/collegiate_subreddits/all").reply(200, collegiateSubredditsFixtures.threeSubreddits);
-        axiosMock.onDelete("/api/collegiate_subreddits").reply(200, "CollegiateSubreddit with id 1 was deleted");
+        axiosMock.onGet("/api/ucsbdates/all").reply(200, ucsbDatesFixtures.threeDates);
+        axiosMock.onDelete("/api/ucsbdates").reply(200, "UCSBDate with id 1 was deleted");
 
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <CollegiateSubredditsIndexPage />
+                    <UCSBDatesIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -163,7 +163,7 @@ describe("CollegiateSubredditsIndexPage tests", () => {
        
         fireEvent.click(deleteButton);
 
-        await waitFor(() => { expect(mockToast).toBeCalledWith("CollegiateSubreddit with id 1 was deleted") });
+        await waitFor(() => { expect(mockToast).toBeCalledWith("UCSBDate with id 1 was deleted") });
 
     });
 

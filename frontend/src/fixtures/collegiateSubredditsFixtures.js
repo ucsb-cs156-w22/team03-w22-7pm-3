@@ -2,26 +2,26 @@ const collegiateSubredditsFixtures = {
     oneSubreddit: {
         "id": 1,
         "name": "UCSantaBarbara",
-        "location": "Santa Barbara",
+        "location": "https://reddit.com/r/UCSantaBarbara/",
         "subreddit": "UCSantaBarbara"
     },
     threeSubreddits: [
         {
             "id": 1,
             "name": "UCSantaBarbara",
-            "location": "Santa Barbara",
+            "location": "https://reddit.com/r/UCSantaBarbara/",
             "subreddit": "UCSantaBarbara"
         },
         {
             "id": 2,
             "name": "UCSD",
-            "location": "San Diego",
+            "location": "https://reddit.com/r/UCSD/",
             "subreddit": "UCSD"
         },
         {
             "id": 3,
             "name": "UCLA",
-            "location": "Los Angeles",
+            "location": "https://reddit.com/r/UCLA/",
             "subreddit": "ucla"
         }
     ]

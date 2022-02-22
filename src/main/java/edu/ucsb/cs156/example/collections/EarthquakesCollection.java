@@ -1,4 +1,4 @@
-package main.java.edu.ucsb.cs156.example.collections;
+package edu.ucsb.cs156.example.collections;
 
 import java.util.Optional;
 

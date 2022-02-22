@@ -1,4 +1,4 @@
-package main.java.edu.ucsb.cs156.example.documents;
+package edu.ucsb.cs156.example.documents;
 
 import java.util.List;
 

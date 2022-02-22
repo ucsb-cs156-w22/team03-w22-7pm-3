@@ -29,7 +29,7 @@ export default function UCSBSubjectsTable({ subjects, currentUser }) {
     const columns = [
         {
             Header: 'id',
-            accessor: 'id', // accessor is the "key" in the data
+            accessor: 'id', // accessor is the "key" in the data.
         },
         {
             Header: 'SubjectCode',
@@ -45,7 +45,7 @@ export default function UCSBSubjectsTable({ subjects, currentUser }) {
         },
         {
             Header: 'CollegeCode',
-            accessor: 'CollegeCode',
+            accessor: 'collegeCode',
         },
         {
             Header: 'RelatedDepartmentCode',
@@ -53,7 +53,8 @@ export default function UCSBSubjectsTable({ subjects, currentUser }) {
         },
         {
             Header: 'Inactive',
-            accessor: 'inactive',
+            accessor: row => String(row.inactive), // custom accessor to convert boolean to a string.
+            id: 'inactive',
         }
     ];
 

@@ -11,7 +11,7 @@ const ucsbSubjectsFixtures = {
     threeSubjects: [
         {
             "id":1,
-            "subjectCode": "ART  CS",
+            "subjectCode": "ART CS",
             "subjectTranslation": "Art (Creative Studies)",
             "deptCode": "CRSTU",
             "collegeCode": "CRST",

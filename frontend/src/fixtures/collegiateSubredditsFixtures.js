@@ -1,10 +1,10 @@
 const collegiateSubredditsFixtures = {
     oneSubreddit: {
         "id": 1,
-        "name": "UCSantaBarbara",
-        "location": "https://reddit.com/r/UCSantaBarbara/",
-        "subreddit": "UCSantaBarbara"
-    },
+        "name": "UC Santa Barbara",
+        "location": "https://old.reddit.com/r/UCSantaBarbara/",
+        "subreddit": "UCSantaBarbara",
+      },
     threeSubreddits: [
         {
             "id": 1,

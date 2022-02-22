@@ -96,7 +96,7 @@ describe("CollegiateSubredditsIndexPage tests", () => {
     test("renders three subreddits without crashing for admin user", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/collegiate_subreddits/all").reply(200, ucsbDatesFixtures.threeDates);
+        axiosMock.onGet("/api/collegiate_subreddits/all").reply(200, collegiateSubredditsFixtures.threeSubreddits);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>

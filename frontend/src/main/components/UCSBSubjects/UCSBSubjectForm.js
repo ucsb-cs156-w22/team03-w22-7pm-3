@@ -114,17 +114,23 @@ function UCSBSubjectForm({ initialUCSBSubject, submitAction, buttonLabel="Create
 
             <Form.Group className="mb-3" >
                 <Form.Label htmlFor="inactive">Inactive</Form.Label>
-                <Form.Control
-                    data-testid="UCSBSubjectForm-inactive"
+                <Form.Select
+                    id="inactive"
+                    {...register("inactive", { required: true})}
+                    >
+
+                    <option value = "false">False</option>
+                    <option value = "true">True</option>
+
+                    {/* value = {initialUCSBSubject.inactive} */}
+                    {/* data-testid="UCSBSubjectForm-inactive"
                     id="inactive"
                     type="text"
+                    value={initialUCSBSubject.inactive}
                     isInvalid={Boolean(errors.inactive)}
-                    {...register("inactive", { required: true, pattern: invalid_regex})}
-                />
-                <Form.Control.Feedback type="invalid">
-                    {errors.inactive && 'Inactive is required. '}
-                    {errors.inactive?.type === 'pattern' && 'Inactive must be a Boolean, e.g \'true\' or \'false\''}
-                </Form.Control.Feedback>
+                    {...register("inactive", { required: true})} */}
+                </Form.Select>
+
             </Form.Group>                        
 
 

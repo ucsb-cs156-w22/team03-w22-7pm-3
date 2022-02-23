@@ -1,12 +1,15 @@
 package edu.ucsb.cs156.example.controllers;
 
 import edu.ucsb.cs156.example.repositories.UserRepository;
+import edu.ucsb.cs156.example.services.EarthquakeQueryService;
 import edu.ucsb.cs156.example.testconfig.TestConfig;
 import edu.ucsb.cs156.example.ControllerTestCase;
 import edu.ucsb.cs156.example.collections.EarthquakesCollection;
 import edu.ucsb.cs156.example.documents.EarthquakeFeatureCollection;
 import edu.ucsb.cs156.example.documents.EarthquakeMetadata;
 import edu.ucsb.cs156.example.documents.EarthquakeFeature;
+import edu.ucsb.cs156.example.documents.EarthquakeFeatureProperties;
+
 // import edu.ucsb.cs156.example.entities.Todo;
 import edu.ucsb.cs156.example.entities.User;
 import edu.ucsb.cs156.example.repositories.TodoRepository;
@@ -24,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -43,6 +47,8 @@ public class EarthquakeControllerTests extends ControllerTestCase {
         @MockBean
         UserRepository userRepository;
 
+        @MockBean
+        EarthquakeQueryService mockEarthquakeQueryService;
         // Authorization tests for /api/earthquakes/all
 
         @Test
@@ -94,32 +100,65 @@ public class EarthquakeControllerTests extends ControllerTestCase {
 
         }
 
-        // // Tests with mocks for database actions
+        @WithMockUser(roles = { "ADMIN"})
+        @Test
+        public void api_earthquakes_retrieve_stores_earthquakefeatures() throws Exception{
+                // arrange
 
-        // @WithMockUser(roles = { "USER" })
-        // @Test
-        // public void api_earthquakes_post__user_logged_in__creates_a_earthquake() throws Exception {
+                EarthquakeFeatureProperties efp = EarthquakeFeatureProperties.builder()
+                                .mag(4)
+                                .build();
 
-        //         EarthquakeFeature expectedEarthquake = Student.builder()
-        //                         .perm(1234567)
-        //                         .firstName("Chris")
-        //                         .lastName("Gaucho")
-        //                         .build();
+                EarthquakeFeature ef = EarthquakeFeature.builder()
+                                .type("Feature")
+                                .properties(efp)
+                                .build();
+                
+                List<EarthquakeFeature> lef = new ArrayList<>();
+                lef.add(ef);
 
-        //         when(earthquakeCollection.save(eq(expectedEarthquake))).thenReturn(expectedEarthquake);
+                EarthquakeMetadata em = EarthquakeMetadata.builder()
+                                ._id("")
+                                .api("api")
+                                .count(1)
+                                .generated(1)
+                                .status(0)
+                                .title("title")
+                                .url("url")
+                                .build();
 
-        //         // act
-        //         MvcResult response = mockMvc.perform(
-        //                         post("/api/earthquakes/post?perm=1234567&firstName=Chris&lastName=Gaucho") //fix this
-        //                                         .with(csrf()))
-        //                         .andExpect(status().isOk()).andReturn();
+                EarthquakeFeatureCollection efc = EarthquakeFeatureCollection.builder()
+                                ._id("")
+                                .features(lef)
+                                .metadata(em)
+                                .type("EarthquakeFeatureCollection")
+                                .build();
 
-        //         // assert
-        //         verify(earthquakeCollection, times(1)).save(expectedEarthquake);
-        //         String expectedJson = mapper.writeValueAsString(expectedEarthquake);
-        //         String responseString = response.getResponse().getContentAsString();
-        //         assertEquals(expectedJson, responseString);
 
-        // }
+
+                String efcAsJson = mapper.writeValueAsString(efc);
+                EarthquakeFeatureCollection savedEfc = mapper.readValue(efcAsJson, EarthquakeFeatureCollection.class);
+                savedEfc.set_id("efgh5678");
+                String savedLefAsJson = mapper.writeValueAsString(savedEfc.getFeatures());
+
+                when(earthquakeCollection.saveAll(eq(efc.getFeatures()))).thenReturn(savedEfc.getFeatures());
+                String distance = "100";
+                String minMag = "1.5";
+                when(mockEarthquakeQueryService.getJSON(eq("100"),eq("1.5"))).thenReturn(efcAsJson);
+
+                // act
+                MvcResult response = mockMvc.perform(
+                                post("/api/earthquakes/retrieve?distance=100&minMag=1.5")
+                                                .with(csrf()))
+                                .andExpect(status().isOk())
+                                .andReturn();
+
+                // assert
+
+                verify(mockEarthquakeQueryService, times(1)).getJSON(eq("100"),eq("1.5"));
+                verify(earthquakeCollection, times(1)).saveAll(eq(efc.getFeatures()));
+                String responseString = response.getResponse().getContentAsString();
+                assertEquals(savedLefAsJson, responseString);
+        }
 
 }

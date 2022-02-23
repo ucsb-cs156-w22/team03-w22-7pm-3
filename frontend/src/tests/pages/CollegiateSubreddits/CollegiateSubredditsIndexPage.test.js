@@ -138,8 +138,8 @@ describe("CollegiateSubredditsIndexPage tests", () => {
     });
 
     // Delete frontend functionality needs to be implemented before this can be re-added.
-    // Thomas - Now that I'm doing delete, I'm not sure what to do
-    /*
+    // Thomas - this should now work after fixing issues caused by the switch from collegiate_subreddits and collegiatesubreddits
+    
     test("test what happens when you click delete, admin", async () => {
         setupAdminUser();
 
@@ -170,8 +170,6 @@ describe("CollegiateSubredditsIndexPage tests", () => {
         
 
     });
-    */
-    
 
 });
 

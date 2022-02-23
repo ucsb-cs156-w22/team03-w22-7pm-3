@@ -7,7 +7,7 @@ import { MemoryRouter } from "react-router-dom";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
 
 
-describe("StudentsTable tests", () => {
+describe("EarthquakesTable tests", () => {
   const queryClient = new QueryClient();
 
   test("renders without crashing for empty table with user not logged in", () => {
@@ -64,7 +64,7 @@ describe("StudentsTable tests", () => {
 
     const expectedHeaders = ["id", "Title", "Mag", "Place", "Time"];
     const expectedFields = ["id", "title", "mag", "place", "time"];
-    const testId = "StudentsTable";
+    const testId = "EarthquakesTable";
 
     expectedHeaders.forEach( (headerText) => {
       const header = getByText(headerText);

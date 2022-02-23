@@ -34,7 +34,7 @@ export default function UCSBSubjectsEditPage() {
       deptCode: ucsbSubject.deptCode,
       collegeCode: ucsbSubject.collegeCode,
       relatedDeptCode: ucsbSubject.relatedDeptCode,
-      inactive: String(ucsbSubject.inactive)
+      inactive: ucsbSubject.inactive
     }
   });
 

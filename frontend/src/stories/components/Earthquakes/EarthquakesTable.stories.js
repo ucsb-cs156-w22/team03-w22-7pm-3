@@ -20,8 +20,8 @@ Empty.args = {
     earthquakes: []
 };
 
-export const ThreeEarthquake = Template.bind({});
+export const ThreeEarthquakes = Template.bind({});
 
-ThreeEarthquake.args = {
-    earthquake: earthquakesFixtures.threeEarthquakes
+ThreeEarthquakes.args = {
+    earthquakes: earthquakesFixtures.threeEarthquakes
 };

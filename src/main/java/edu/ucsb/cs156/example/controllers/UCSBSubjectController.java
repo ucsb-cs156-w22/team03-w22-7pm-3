@@ -86,10 +86,10 @@ public class UCSBSubjectController extends ApiController {
 
     // Function that implements an endpoint to return JSON of the database record with a specific id
     // Returns an 400 and error message otherwise
-    @ApiOperation(value = "Get a single UCSBSubject by ID")
+    @ApiOperation(value = "Get a single subject")
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("")
-    public ResponseEntity<String> getSubjectByID(@ApiParam("The ID of the UCSBSubject you wish to get") @RequestParam Long id) throws JsonProcessingException {
+    public ResponseEntity<String> getSubjectByID(@ApiParam("id") @RequestParam Long id) throws JsonProcessingException {
         UCSBSubjectOrError soe = new UCSBSubjectOrError(id);
         
         soe = doesUCSBSubjectExist(soe);
@@ -100,32 +100,10 @@ public class UCSBSubjectController extends ApiController {
         return ResponseEntity.ok().body(body);
     }
 
-    //Function implements an endpoint in order to submit an UCSB subject based on specific id to the database record.
-    @ApiOperation(value = "Update a single UCSBSubject via id")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    @PutMapping("")
-    public ResponseEntity<String> putSubjectById(
-            @ApiParam("id") @RequestParam Long id,
-            @RequestBody @Valid UCSBSubject incomingUCSBSubject) throws JsonProcessingException {
-
-        UCSBSubjectOrError soe = new UCSBSubjectOrError(id);
-
-        soe = doesUCSBSubjectExist(soe);
-        if (soe.error != null) {
-            return soe.error;
-        }
-
-        //incomingUCSBSubject.setUser(user);
-        ucsbSubjectRepository.save(incomingUCSBSubject);
-
-        String body = mapper.writeValueAsString(incomingUCSBSubject);
-        return ResponseEntity.ok().body(body);
-    }
-
-    @ApiOperation(value = "Delete a UCSBSubject by ID")
+    @ApiOperation(value = "Delete a UCSBSubject")
     @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("")
-    public ResponseEntity<String> deleteUCSBSubject(@ApiParam("The ID of the UCSBSubject you wish to delete") @RequestParam Long id) {
+    public ResponseEntity<String> deleteUCSBSubject(@ApiParam("id") @RequestParam Long id) {
         // loggingService.logMethod();
 
         UCSBSubjectOrError soe = new UCSBSubjectOrError(id);
@@ -136,9 +114,37 @@ public class UCSBSubjectController extends ApiController {
         }
 
         ucsbSubjectRepository.deleteById(id);
-        return ResponseEntity.ok().body(String.format("record %d deleted", id)); 
+        return ResponseEntity.ok().body(String.format("UCSBSubject with id %d deleted", id)); 
     }
 
+    //Function implements an endpoint in order to submit an UCSB subject based on specific id to the database record.
+    @ApiOperation(value = "Update a single subject")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("")
+    public ResponseEntity<String> updateUCSBSubject(
+            @ApiParam("id") @RequestParam Long id,
+            @RequestBody @Valid UCSBSubject incomingUCSBSubject) throws JsonProcessingException {
+        UCSBSubjectOrError uoe = new UCSBSubjectOrError(id);
+
+        uoe = doesUCSBSubjectExist(uoe);
+        if (uoe.error != null) {
+            return uoe.error;
+        }
+
+        UCSBSubject oldSubject = uoe.ucsbSubject;
+
+        oldSubject.setSubjectCode(incomingUCSBSubject.getSubjectCode());
+        oldSubject.setSubjectTranslation(incomingUCSBSubject.getSubjectTranslation());
+        oldSubject.setDeptCode(incomingUCSBSubject.getDeptCode());
+        oldSubject.setCollegeCode(incomingUCSBSubject.getCollegeCode());
+        oldSubject.setRelatedDeptCode(incomingUCSBSubject.getRelatedDeptCode());
+        oldSubject.setInactive(incomingUCSBSubject.isInactive());
+
+        ucsbSubjectRepository.save(oldSubject);
+
+        String body = mapper.writeValueAsString(oldSubject);
+        return ResponseEntity.ok().body(body);
+    }
 
     // soe.id is item being looked up
     // If UCSBSubject with id soe.id exists, it is copied to soe.UCSBSubject and toe.error is null
@@ -151,7 +157,7 @@ public class UCSBSubjectController extends ApiController {
         if (optionalUCSBSubject.isEmpty()) {
             soe.error = ResponseEntity
                     .badRequest()
-                    .body(String.format("id %d not found", soe.id));
+                    .body(String.format("UCSBSubject with id %d not found", soe.id));
         } else {
             soe.ucsbSubject = optionalUCSBSubject.get();
         }

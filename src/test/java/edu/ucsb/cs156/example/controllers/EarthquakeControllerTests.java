@@ -78,6 +78,7 @@ public class EarthquakeControllerTests extends ControllerTestCase {
                         .type("Earthquake")
                         .build();
                 ArrayList<EarthquakeFeatureCollection> earthquakes = new ArrayList<>();
+                earthquakes.addAll(Arrays.asList(s));
                 when(earthquakeCollection.findAll()).thenReturn(earthquakes);
 
                 // act
@@ -90,6 +91,7 @@ public class EarthquakeControllerTests extends ControllerTestCase {
                 String expectedJson = mapper.writeValueAsString(earthquakes);
                 String responseString = response.getResponse().getContentAsString();
                 assertEquals(expectedJson, responseString);
+
         }
 
         // // Tests with mocks for database actions

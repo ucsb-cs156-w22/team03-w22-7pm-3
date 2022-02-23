@@ -28,7 +28,7 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @Api(description = "Collegiate Subreddits")
-@RequestMapping("/api/collegiate_subreddits")
+@RequestMapping("/api/collegiatesubreddits")
 @RestController
 @Slf4j
 public class CollegiateSubredditController extends ApiController{

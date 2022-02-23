@@ -15,7 +15,7 @@ import lombok.Builder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name = "collegiate_subreddits")
+@Entity(name = "collegiatesubreddits")
 public class CollegiateSubreddit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

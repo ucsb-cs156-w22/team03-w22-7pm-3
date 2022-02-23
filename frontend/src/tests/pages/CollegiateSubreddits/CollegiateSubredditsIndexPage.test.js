@@ -45,7 +45,7 @@ describe("CollegiateSubredditsIndexPage tests", () => {
     test("renders without crashing for regular user", () => {
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/collegiate_subreddits/all").reply(200, []);
+        axiosMock.onGet("/api/collegiatesubreddits/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -61,7 +61,7 @@ describe("CollegiateSubredditsIndexPage tests", () => {
     test("renders without crashing for admin user", () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/collegiate_subreddits/all").reply(200, []);
+        axiosMock.onGet("/api/collegiatesubreddits/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -77,7 +77,7 @@ describe("CollegiateSubredditsIndexPage tests", () => {
     test("renders three subreddits without crashing for regular user", async () => {
         setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/collegiate_subreddits/all").reply(200, collegiateSubredditsFixtures.threeSubreddits);
+        axiosMock.onGet("/api/collegiatesubreddits/all").reply(200, collegiateSubredditsFixtures.threeSubreddits);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
@@ -96,7 +96,7 @@ describe("CollegiateSubredditsIndexPage tests", () => {
     test("renders three subreddits without crashing for admin user", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/collegiate_subreddits/all").reply(200, collegiateSubredditsFixtures.threeSubreddits);
+        axiosMock.onGet("/api/collegiatesubreddits/all").reply(200, collegiateSubredditsFixtures.threeSubreddits);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
@@ -116,7 +116,7 @@ describe("CollegiateSubredditsIndexPage tests", () => {
         setupUserOnly();
 
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/collegiate_subreddits/all").timeout();
+        axiosMock.onGet("/api/collegiatesubreddits/all").timeout();
 
         const restoreConsole = mockConsole();
 
@@ -131,21 +131,21 @@ describe("CollegiateSubredditsIndexPage tests", () => {
         await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1); });
 
         const errorMessage = console.error.mock.calls[0][0];
-        expect(errorMessage).toMatch("Error communicating with backend via GET on /api/collegiate_subreddits/all");
+        expect(errorMessage).toMatch("Error communicating with backend via GET on /api/collegiatesubreddits/all");
         restoreConsole();
 
         expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
     // Delete frontend functionality needs to be implemented before this can be re-added.
-
+    // Thomas - Now that I'm doing delete, I'm not sure what to do
     /*
     test("test what happens when you click delete, admin", async () => {
         setupAdminUser();
 
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/collegiate_subreddits/all").reply(200, collegiateSubredditsFixtures.threeSubreddits);
-        axiosMock.onDelete("/api/collegiate_subreddits").reply(200, "CollegiateSubreddit with id 1 was deleted");
+        axiosMock.onGet("/api/collegiatesubreddits/all").reply(200, collegiateSubredditsFixtures.threeSubreddits);
+        axiosMock.onDelete("/api/collegiatesubreddits").reply(200, "CollegiateSubreddit with id 1 was deleted");
 
 
         const { getByTestId } = render(
@@ -171,6 +171,7 @@ describe("CollegiateSubredditsIndexPage tests", () => {
 
     });
     */
+    
 
 });
 

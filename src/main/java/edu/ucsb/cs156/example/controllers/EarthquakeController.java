@@ -1,7 +1,7 @@
 package edu.ucsb.cs156.example.controllers;
 
 import edu.ucsb.cs156.example.collections.EarthquakesCollection;
-import edu.ucsb.cs156.example.documents.EarthquakeFeature;
+import edu.ucsb.cs156.example.documents.EarthquakeFeatureCollection;
 
 
 import io.swagger.annotations.Api;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
-@Api(description = "EarthquakeFeatures")
+@Api(description = "Earthquakes")
 @RequestMapping("/api/earthquakes")
 @RestController
 @Slf4j
@@ -36,8 +36,8 @@ public class EarthquakeController extends ApiController {
     @ApiOperation(value = "List all earthquakes")
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/all")
-    public Iterable<EarthquakeFeature> allStudents() {
-        Iterable<EarthquakeFeature> earthquakes = earthquakeCollection.findAll();
+    public Iterable<EarthquakeFeatureCollection> allStudents() {
+        Iterable<EarthquakeFeatureCollection> earthquakes = earthquakeCollection.findAll();
         return earthquakes;
     }
 

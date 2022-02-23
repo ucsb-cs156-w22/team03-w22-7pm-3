@@ -6,9 +6,9 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import edu.ucsb.cs156.example.documents.EarthquakeFeature;
+import edu.ucsb.cs156.example.documents.EarthquakeFeatureCollection;
 
 @Repository
-public interface EarthquakesCollection extends MongoRepository<EarthquakeFeature, ObjectId> {
+public interface EarthquakesCollection extends MongoRepository<EarthquakeFeatureCollection, ObjectId> {
  
 }

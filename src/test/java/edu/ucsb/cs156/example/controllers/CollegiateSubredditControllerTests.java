@@ -43,14 +43,14 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
 
     @Test
     public void api_collegiate_subreddit_all__logged_out__returns_403() throws Exception {
-        mockMvc.perform(get("/api/collegiate_subreddits/all"))
+        mockMvc.perform(get("/api/collegiatesubreddits/all"))
                 .andExpect(status().is(403));
     }
 
     @WithMockUser(roles = { "USER" })
     @Test
     public void api_collegiate_subreddit_all__user_logged_in__returns_200() throws Exception {
-        mockMvc.perform(get("/api/collegiate_subreddits/all"))
+        mockMvc.perform(get("/api/collegiatesubreddits/all"))
                 .andExpect(status().isOk());
     }
 
@@ -58,7 +58,7 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
 
     @Test
     public void api_collegiate_subreddits_post__logged_out__returns_403() throws Exception {
-        mockMvc.perform(post("/api/collegiate_subreddits/post"))
+        mockMvc.perform(post("/api/collegiatesubreddits/post"))
                 .andExpect(status().is(403));
     }
 
@@ -80,7 +80,7 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
         when(collegiateSubredditRepository.findAll()).thenReturn(expectedCollegiateSubreddits);
 
         // act
-        MvcResult response = mockMvc.perform(get("/api/collegiate_subreddits/all"))
+        MvcResult response = mockMvc.perform(get("/api/collegiatesubreddits/all"))
                 .andExpect(status().isOk()).andReturn();
 
         // assert
@@ -109,7 +109,7 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
 
         // act
         MvcResult response = mockMvc.perform(
-                post("/api/collegiate_subreddits/post?name=test name&location=test location&subreddit=test sub")
+                post("/api/collegiatesubreddits/post?name=test name&location=test location&subreddit=test sub")
                         .with(csrf()))
                 .andExpect(status().isOk()).andReturn();
 
@@ -130,7 +130,7 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
         when(collegiateSubredditRepository.findById(eq(123L))).thenReturn(Optional.of(CollegiateSubreddit1));
 
         // act
-        MvcResult response = mockMvc.perform(get("/api/collegiate_subreddits?id=123"))
+        MvcResult response = mockMvc.perform(get("/api/collegiatesubreddits?id=123"))
                 .andExpect(status().isOk()).andReturn();
 
         // assert
@@ -147,7 +147,7 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
 
         when(collegiateSubredditRepository.findById(eq(123L))).thenReturn(Optional.empty());
 
-        MvcResult response = mockMvc.perform(get("/api/collegiate_subreddits?id=123")).andExpect(status().isBadRequest()).andReturn();
+        MvcResult response = mockMvc.perform(get("/api/collegiatesubreddits?id=123")).andExpect(status().isBadRequest()).andReturn();
 
         verify(collegiateSubredditRepository,times(1)).findById(eq(123L));
         String responseString = response.getResponse().getContentAsString();
@@ -165,7 +165,7 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
 
         // act
         MvcResult response = mockMvc.perform(
-                delete("/api/collegiate_subreddits?id=123")
+                delete("/api/collegiatesubreddits?id=123")
                         .with(csrf()))
                 .andExpect(status().isOk()).andReturn();
 
@@ -186,7 +186,7 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
 
         // act
         MvcResult response = mockMvc.perform(
-                delete("/api/collegiate_subreddits?id=123")
+                delete("/api/collegiatesubreddits?id=123")
                         .with(csrf()))
                 .andExpect(status().isBadRequest()).andReturn();
 
@@ -218,7 +218,7 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
 
         // act
         MvcResult response = mockMvc.perform(
-                put("/api/collegiate_subreddits?id=123")
+                put("/api/collegiatesubreddits?id=123")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("utf-8")
                         .content(requestBody)
@@ -246,7 +246,7 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
 
         // act
         MvcResult response = mockMvc.perform(
-                put("/api/collegiate_subreddits?id=123")
+                put("/api/collegiatesubreddits?id=123")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("utf-8")
                         .content(requestBody)

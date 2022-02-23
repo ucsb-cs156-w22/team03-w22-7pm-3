@@ -10,21 +10,21 @@ const earthquakesFixtures = {
 	],
 	threeEarthquakes: [
         {
-            "id": 1,
+            "id": "abcd1234abcd1234abcd1234abcd1234",
             "title": "M 2.2 - 10km ESE of Ojai, CA",
 			"mag": 2.16,
 			"place": "10km ESE of Ojai, CA",
 			"time": 1644571919000
         },
         {
-            "id": 2,
+            "id": "abcd1234abcd1234abcd1234abcd1234",
             "title": "M 2.2 - 10km ESE of Ojai, CA",
 			"mag": 2.16,
 			"place": "10km ESE of Ojai, CA",
 			"time": 1644571919000
         },
         {
-            "id": 3,
+            "id": "abcd1234abcd1234abcd1234abcd1234",
             "title": "M 2.2 - 10km ESE of Ojai, CA",
 			"mag": 2.16,
 			"place": "10km ESE of Ojai, CA",

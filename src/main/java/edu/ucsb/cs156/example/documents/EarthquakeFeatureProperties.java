@@ -17,8 +17,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EarthquakeFeatureProperties {
-    @Id
-    private String _id;
+    // @Id
+    // private String _id;
 
     private double mag;
     private String place;

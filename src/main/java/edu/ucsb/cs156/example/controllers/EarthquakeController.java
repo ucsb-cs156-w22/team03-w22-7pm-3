@@ -47,7 +47,7 @@ public class EarthquakeController extends ApiController {
     @ApiOperation(value = "List all earthquakes")
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/all")
-    public Iterable<EarthquakeFeature> allStudents() {
+    public Iterable<EarthquakeFeature> allEarthquakes() {
         Iterable<EarthquakeFeature> earthquakes = earthquakeCollection.findAll();
         return earthquakes;
     }

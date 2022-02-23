@@ -74,10 +74,10 @@ public class EarthquakeControllerTests extends ControllerTestCase {
 
                 // arrange
 
-                EarthquakeFeatureCollection s = EarthquakeFeatureCollection.builder()
+                EarthquakeFeature s = EarthquakeFeature.builder()
                         .type("Earthquake")
                         .build();
-                ArrayList<EarthquakeFeatureCollection> earthquakes = new ArrayList<>();
+                ArrayList<EarthquakeFeature> earthquakes = new ArrayList<>();
                 earthquakes.addAll(Arrays.asList(s));
                 when(earthquakeCollection.findAll()).thenReturn(earthquakes);
 

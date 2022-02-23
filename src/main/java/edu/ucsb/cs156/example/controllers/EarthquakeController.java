@@ -2,6 +2,7 @@ package edu.ucsb.cs156.example.controllers;
 
 import edu.ucsb.cs156.example.collections.EarthquakesCollection;
 import edu.ucsb.cs156.example.documents.EarthquakeFeatureCollection;
+import edu.ucsb.cs156.example.documents.EarthquakeFeature;
 
 
 import io.swagger.annotations.Api;
@@ -36,8 +37,8 @@ public class EarthquakeController extends ApiController {
     @ApiOperation(value = "List all earthquakes")
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/all")
-    public Iterable<EarthquakeFeatureCollection> allStudents() {
-        Iterable<EarthquakeFeatureCollection> earthquakes = earthquakeCollection.findAll();
+    public Iterable<EarthquakeFeature> allStudents() {
+        Iterable<EarthquakeFeature> earthquakes = earthquakeCollection.findAll();
         return earthquakes;
     }
 

@@ -161,7 +161,7 @@ describe("CollegiateSubredditsEditPage tests", () => {
             expect(axiosMock.history.put[0].params).toEqual({ id: 17 });
             expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
                 name: 'California State University',
-                location: "Sacramento, Californiag",
+                location: "Sacramento, California",
                 subreddit: "CSUReddit"
             })); // posted object
 

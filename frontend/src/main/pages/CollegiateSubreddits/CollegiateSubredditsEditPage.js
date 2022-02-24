@@ -1,6 +1,6 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useParams } from "react-router-dom";
-import CollegiateSubredditsForm from "main/components/CollegiateSubreddits/CollegiateSubredditsForm";
+import CollegiateSubredditForm from "main/components/CollegiateSubreddits/CollegiateSubredditForm";
 import { Navigate } from 'react-router-dom'
 import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
@@ -43,7 +43,7 @@ export default function CollegiateSubredditsEditPage() {
     objectToAxiosPutParams,
     { onSuccess },
     // Stryker disable next-line all : hard to set up test for caching
-    [`/api/collegiatesubreddit?id=${id}`]
+    [`/api/collegiatesubreddits?id=${id}`]
   );
 
   const { isSuccess } = mutation
@@ -53,15 +53,15 @@ export default function CollegiateSubredditsEditPage() {
   }
 
   if (isSuccess) {
-    return <Navigate to="/collegiatesubreddit/list" />
+    return <Navigate to="/collegiatesubreddits/list" />
   }
 
   return (
     <BasicLayout>
-      <div className="pt-2">
+      <div className="pt-3">
         <h1>Edit CollegiateSubreddit</h1>
         {subreddit &&
-          <CollegiateSubredditsForm initialCollegiateSubreddit={subreddit} submitAction={onSubmit} buttonLabel="Update" />
+          <CollegiateSubredditForm initialCollegiateSubreddit={subreddit} submitAction={onSubmit} buttonLabel="Update" />
         }
       </div>
     </BasicLayout>

@@ -3,6 +3,8 @@ import { useBackend, useBackendMutation } from 'main/utils/useBackend';
 import EarthquakesTable from "main/components/Earthquakes/EarthquakesTable";
 import { useCurrentUser } from 'main/utils/currentUser'
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
+import {onPurgeSuccess,cellToAxiosParamsPurge} from "main/utils/EarthquakeUtils"
+
 
 import { Button } from 'react-bootstrap';
 import { toast } from "react-toastify";
@@ -10,8 +12,8 @@ import { toast } from "react-toastify";
 function Purge()
 {
   let purge = useBackendMutation(
-    () => ({ url: "/api/earthquakes/purge", method: "POST" }),
-    { onSuccess: () => { toast("All the earthquakes have been deleted."); } },
+    cellToAxiosParamsPurge,
+    { onSuccess: onPurgeSuccess},
     // Stryker disable next-line all : don't test internal caching of React Query
     ["/api/earthquakes/all"],
   );
@@ -39,8 +41,8 @@ export default function EarthquakesListPage() {
 	  <BasicLayout>
 		<div className="pt-2">
 		  <h1>Earthquakes</h1>
-		  <EarthquakesTable earthquakes={earthquakes} currentUser={currentUser} />
 		  <Purge/>
+		  <EarthquakesTable earthquakes={earthquakes} currentUser={currentUser} />
 		</div>
 	  </BasicLayout>
 	)

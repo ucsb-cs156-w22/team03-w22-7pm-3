@@ -3,12 +3,23 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import EarthquakesIndexPage from "main/pages/Earthquakes/EarthquakesIndexPage";
 
+
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import { earthquakesFixtures } from "fixtures/earthquakesFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import mockConsole from "jest-mock-console";
+
+const mockToast = jest.fn();
+jest.mock('react-toastify', () => {
+    const originalModule = jest.requireActual('react-toastify');
+    return {
+        __esModule: true,
+        ...originalModule,
+        toast: (x) => mockToast(x)
+    };
+});
 
 describe("EarthquakesIndexPage tests", () => {
 
@@ -128,8 +139,8 @@ describe("EarthquakesIndexPage tests", () => {
             .onGet("/api/earthquakes/all")
             .replyOnce(200, earthquakesFixtures.threeEarthquakes)
             .onGet("/api/earthquakes/all")
-            .replyOnce(200, []);
-			axiosMock.onPost("/api/earthquakes/purge").reply(200);
+            .replyOnce(200);
+		axiosMock.onPost("/api/earthquakes/purge").reply(200,"All earthquakes have been deleted.");
 
         const { getByTestId, queryByTestId } = render(
             <QueryClientProvider client={queryClient}>
@@ -143,8 +154,12 @@ describe("EarthquakesIndexPage tests", () => {
 
         const purgeButton = getByTestId('purge-button');
         expect(purgeButton).toBeInTheDocument();
+
 		fireEvent.click(purgeButton);
-        await waitFor(() => { expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument(); });
+
+        await waitFor(() => {expect(mockToast).toBeCalledWith("All earthquakes have been deleted."),
+        expect(queryByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument()});
 	});
 
 });
+

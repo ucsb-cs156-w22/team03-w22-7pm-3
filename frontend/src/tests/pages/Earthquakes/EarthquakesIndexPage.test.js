@@ -140,9 +140,9 @@ describe("EarthquakesIndexPage tests", () => {
             .replyOnce(200, earthquakesFixtures.threeEarthquakes)
             .onGet("/api/earthquakes/all")
             .replyOnce(200);
-		axiosMock.onPost("/api/earthquakes/purge").reply(200,"All earthquakes have been deleted.");
+		axiosMock.onDelete("/api/earthquakes/purge").reply(200,"All earthquakes have been deleted.");
 
-        const { getByTestId, queryByTestId } = render(
+        const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <EarthquakesIndexPage />
@@ -158,7 +158,7 @@ describe("EarthquakesIndexPage tests", () => {
 		fireEvent.click(purgeButton);
 
         await waitFor(() => {expect(mockToast).toBeCalledWith("All earthquakes have been deleted."),
-        expect(queryByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument()});
+        expect(getByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument()});
 	});
 
 });

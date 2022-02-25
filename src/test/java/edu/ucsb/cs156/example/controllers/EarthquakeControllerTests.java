@@ -164,7 +164,7 @@ public class EarthquakeControllerTests extends ControllerTestCase {
         @WithMockUser(roles = { "ADMIN", "USER" })
         @Test
         public void admin_can_purge() throws Exception {
-                MvcResult response = mockMvc.perform(post("/api/earthquakes/purge")
+                MvcResult response = mockMvc.perform(delete("/api/earthquakes/purge")
                                                         .with(csrf()))
                                                 .andExpect(status().isOk())
                                                 .andReturn();
@@ -172,6 +172,6 @@ public class EarthquakeControllerTests extends ControllerTestCase {
                 // assert
                 verify(earthquakeCollection, times(1)).deleteAll();
                 String responseString = response.getResponse().getContentAsString();
-                assertEquals("All earthquakes from the earthquake collection deleted.", responseString);
+                assertEquals("All earthquakes have been deleted.", responseString);
         }
 }

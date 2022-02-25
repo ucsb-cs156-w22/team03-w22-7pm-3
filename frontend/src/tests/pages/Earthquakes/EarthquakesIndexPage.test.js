@@ -1,4 +1,4 @@
-import {  render, waitFor } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import EarthquakesIndexPage from "main/pages/Earthquakes/EarthquakesIndexPage";
@@ -120,5 +120,31 @@ describe("EarthquakesIndexPage tests", () => {
 
         expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
+
+	test("purge buttom successfully delete all EQs, admin only", async() => {
+		setupAdminUser();
+		const queryClient = new QueryClient();
+		axiosMock
+            .onGet("/api/earthquakes/all")
+            .replyOnce(200, earthquakesFixtures.threeEarthquakes)
+            .onGet("/api/earthquakes/all")
+            .replyOnce(200, []);
+			axiosMock.onPost("/api/earthquakes/purge").reply(200);
+
+        const { getByTestId, queryByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <EarthquakesIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+		await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
+		expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
+
+        const purgeButton = getByTestId('purge-button');
+        expect(purgeButton).toBeInTheDocument();
+		fireEvent.click(purgeButton);
+        await waitFor(() => { expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument(); });
+	});
 
 });

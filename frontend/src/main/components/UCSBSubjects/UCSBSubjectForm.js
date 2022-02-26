@@ -18,7 +18,7 @@ function UCSBSubjectForm({ initialUCSBSubject, submitAction, buttonLabel="Create
 
     const navigate = useNavigate();
 
-    const invalid_regex = /((true)|(false))/i;
+    const inactive_regex = /^(true|false)$/i;
 
     return (
 
@@ -107,7 +107,7 @@ function UCSBSubjectForm({ initialUCSBSubject, submitAction, buttonLabel="Create
                     {...register("relatedDeptCode", { required: false })}
                 />
                 { <Form.Control.Feedback type="invalid">
-                    {errors.relatedDeptCode && 'Related Dept Code is required.'}
+                    {/* {errors.relatedDeptCode && 'Related Dept Code is required.'} */}
                 </Form.Control.Feedback> }
             </Form.Group>
 
@@ -119,10 +119,10 @@ function UCSBSubjectForm({ initialUCSBSubject, submitAction, buttonLabel="Create
                     id="inactive"
                     type="text"
                     isInvalid={Boolean(errors.inactive)}
-                    {...register("inactive", { required: "Inactive is required.", pattern: invalid_regex})}
+                    {...register("inactive", { required: "Inactive is required.", pattern: inactive_regex})}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.inactive && 'Inactive is required.'}
+                    {errors.inactive && 'Inactive is required. '}
                     {errors.inactive?.type === 'pattern' && 'Inactive must be a Boolean, e.g \'true\' or \'false\''}
                 </Form.Control.Feedback>
             </Form.Group>                        

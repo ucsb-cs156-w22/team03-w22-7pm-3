@@ -135,14 +135,10 @@ describe("EarthquakesIndexPage tests", () => {
 	test("purge buttom successfully delete all EQs, admin only", async() => {
 		setupAdminUser();
 		const queryClient = new QueryClient();
-		axiosMock
-            .onGet("/api/earthquakes/all")
-            .replyOnce(200, earthquakesFixtures.threeEarthquakes)
-            .onGet("/api/earthquakes/all")
-            .replyOnce(200);
+		axiosMock.onGet("/api/earthquakes/all").reply(200, earthquakesFixtures.threeEarthquakes);
 		axiosMock.onDelete("/api/earthquakes/purge").reply(200,"All earthquakes have been deleted.");
 
-        const { getByTestId } = render(
+        const { getByTestId, queryByTestId } = render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
                     <EarthquakesIndexPage />
@@ -157,8 +153,7 @@ describe("EarthquakesIndexPage tests", () => {
 
 		fireEvent.click(purgeButton);
 
-        await waitFor(() => {expect(mockToast).toBeCalledWith("All earthquakes have been deleted."),
-        expect(getByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument()});
+        await waitFor(() => {expect(mockToast).toBeCalledWith("All earthquakes have been deleted.")});
 	});
 
 });

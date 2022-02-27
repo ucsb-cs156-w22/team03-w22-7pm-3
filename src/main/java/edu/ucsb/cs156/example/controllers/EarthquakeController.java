@@ -78,7 +78,7 @@ public class EarthquakeController extends ApiController {
         }
 
 
-        features = earthquakeCollection.saveAll(features);
+        List<EarthquakeFeature> newfeatures = earthquakeCollection.saveAll(features);
 
         return ResponseEntity.ok().body(features);
     }

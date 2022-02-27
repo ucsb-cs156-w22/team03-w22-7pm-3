@@ -63,7 +63,7 @@ describe("EarthquakesTable tests", () => {
     );
 
     const expectedHeaders = ["id", "Title", "Mag", "Place", "Time"];
-    const expectedFields = ["id", "title", "mag", "place", "time"];
+    const expectedFields = ["_id", "title", "mag", "place", "time"];
     const testId = "EarthquakesTable";
 
     expectedHeaders.forEach( (headerText) => {
@@ -76,8 +76,8 @@ describe("EarthquakesTable tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-    expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("abcd1234abcd1234abcd1234abcd1234");
-    expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("abcd1234abcd1234abcd1234abcd1234");
+    expect(getByTestId(`${testId}-cell-row-0-col-_id`)).toHaveTextContent("abcd1234abcd1234abcd1234abcd1234");
+    expect(getByTestId(`${testId}-cell-row-1-col-_id`)).toHaveTextContent("abcd1234abcd1234abcd1234abcd1234");
     expect(getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("M 2.2 - 10km ESE of Ojai, CA");
     expect(getByTestId(`${testId}-cell-row-1-col-title`)).toHaveTextContent("M 2.2 - 10km ESE of Ojai, CA");
 

@@ -106,12 +106,21 @@ public class EarthquakeControllerTests extends ControllerTestCase {
                 // arrange
 
                 EarthquakeFeatureProperties efp = EarthquakeFeatureProperties.builder()
-                                .mag(4)
+                                .title("Title")
+                                .mag(42.2)
+                                .place("Place")
+                                .time(42)
+                                .url("URL")
                                 .build();
 
                 EarthquakeFeature ef = EarthquakeFeature.builder()
                                 .type("Feature")
                                 .properties(efp)
+                                .title("Title")
+                                .mag(42.2)
+                                .place("Place")
+                                .time(42)
+                                .url("URL")
                                 .build();
                 
                 List<EarthquakeFeature> lef = new ArrayList<>();
@@ -140,11 +149,9 @@ public class EarthquakeControllerTests extends ControllerTestCase {
                 EarthquakeFeatureCollection savedEfc = mapper.readValue(efcAsJson, EarthquakeFeatureCollection.class);
                 savedEfc.set_id("efgh5678");
                 String savedLefAsJson = mapper.writeValueAsString(savedEfc.getFeatures());
-
+                
                 when(earthquakeCollection.saveAll(eq(efc.getFeatures()))).thenReturn(savedEfc.getFeatures());
-                String distance = "100";
-                String minMag = "1.5";
-                when(mockEarthquakeQueryService.getJSON(eq("100"),eq("1.5"))).thenReturn(efcAsJson);
+                
 
                 // act
                 MvcResult response = mockMvc.perform(

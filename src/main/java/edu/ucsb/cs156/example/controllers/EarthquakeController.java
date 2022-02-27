@@ -57,7 +57,7 @@ public class EarthquakeController extends ApiController {
     @ApiOperation(value = "Get earthquakes a certain distance from UCSB's Storke Tower", notes = "JSON return format documented here: https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/retrieve")
-    public ResponseEntity<List<EarthquakeFeature>> getEarthquakes(
+    public ResponseEntity<List<EarthquakeFeature>> postEarthquakes(
         @ApiParam("distance in km, e.g. 100") @RequestParam String distance,
         @ApiParam("minimum magnitude, e.g. 2.5") @RequestParam String minMag
     ) throws JsonProcessingException {
@@ -68,6 +68,15 @@ public class EarthquakeController extends ApiController {
         EarthquakeFeatureCollection collection = mapper.readValue(result, EarthquakeFeatureCollection.class);
         List<EarthquakeFeature> features = collection.getFeatures();
         
+        for(var x: features){
+            x.setTitle(x.getProperties().getTitle());
+            x.setMag(x.getProperties().getMag());
+            x.setPlace(x.getProperties().getPlace());
+            x.setTime(x.getProperties().getTime());
+            x.setUrl(x.getProperties().getUrl());
+        }
+
+
         features = earthquakeCollection.saveAll(features);
 
         return ResponseEntity.ok().body(features);

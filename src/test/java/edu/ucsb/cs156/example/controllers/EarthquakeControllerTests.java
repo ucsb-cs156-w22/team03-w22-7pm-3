@@ -51,6 +51,7 @@ public class EarthquakeControllerTests extends ControllerTestCase {
         EarthquakeQueryService mockEarthquakeQueryService;
         // Authorization tests for /api/earthquakes/all
 
+
         @Test
         public void api_earthquakes_all__logged_out__returns_403() throws Exception {
                 mockMvc.perform(get("/api/earthquakes/all"))
@@ -100,7 +101,7 @@ public class EarthquakeControllerTests extends ControllerTestCase {
 
         }
 
-        @WithMockUser(roles = { "ADMIN"})
+        @WithMockUser(roles = { "USER","ADMIN"})
         @Test
         public void api_earthquakes_retrieve_stores_earthquakefeatures() throws Exception{
                 // arrange
@@ -113,19 +114,6 @@ public class EarthquakeControllerTests extends ControllerTestCase {
                                 .url("URL")
                                 .build();
 
-                EarthquakeFeature ef = EarthquakeFeature.builder()
-                                .type("Feature")
-                                .properties(efp)
-                                .title("Title")
-                                .mag(42.2)
-                                .place("Place")
-                                .time(42)
-                                .url("URL")
-                                .build();
-                
-                List<EarthquakeFeature> lef = new ArrayList<>();
-                lef.add(ef);
-
                 EarthquakeMetadata em = EarthquakeMetadata.builder()
                                 ._id("")
                                 .api("api")
@@ -135,6 +123,20 @@ public class EarthquakeControllerTests extends ControllerTestCase {
                                 .title("title")
                                 .url("url")
                                 .build();
+                
+                EarthquakeFeature ef = EarthquakeFeature.builder()
+                                ._id("1")
+                                .type("Feature")
+                                .properties(efp)
+                                .title("")
+                                .mag(0)
+                                .place("")
+                                .time(1)
+                                .url("")
+                                .build();   
+
+                List<EarthquakeFeature> lef = new ArrayList<>();
+                lef.add(ef);   
 
                 EarthquakeFeatureCollection efc = EarthquakeFeatureCollection.builder()
                                 ._id("")
@@ -143,29 +145,55 @@ public class EarthquakeControllerTests extends ControllerTestCase {
                                 .type("EarthquakeFeatureCollection")
                                 .build();
 
-
-
                 String efcAsJson = mapper.writeValueAsString(efc);
                 EarthquakeFeatureCollection savedEfc = mapper.readValue(efcAsJson, EarthquakeFeatureCollection.class);
-                savedEfc.set_id("efgh5678");
-                String savedLefAsJson = mapper.writeValueAsString(savedEfc.getFeatures());
+                // savedEfc.set_id("efgh5678");
+                String WHY = mapper.writeValueAsString(savedEfc.getFeatures());
+
+                EarthquakeFeature AFTERef = EarthquakeFeature.builder()
+                                ._id("1")
+                                .type("Feature")
+                                .properties(efp)
+                                .title("Title")
+                                .mag(42.2)
+                                .place("Place")
+                                .time(42)
+                                .url("URL")
+                                .build();
+                List<EarthquakeFeature> AFTERlef = new ArrayList<>();
+                AFTERlef.add(AFTERef);
+
+
+
+                EarthquakeFeatureCollection AFTERefc = EarthquakeFeatureCollection.builder()
+                                ._id("1")
+                                .features(AFTERlef)
+                                .metadata(em)
+                                .type("EarthquakeFeatureCollection")
+                                .build();
+
+                String AFTERefcAsJson = mapper.writeValueAsString(AFTERefc);
+                EarthquakeFeatureCollection AFTERsavedEfc = mapper.readValue(AFTERefcAsJson, EarthquakeFeatureCollection.class);
+                // AFTERsavedEfc.set_id("efgh5678");
+                String AFTERsavedLefAsJson = mapper.writeValueAsString(AFTERsavedEfc.getFeatures());
+
+
                 
+
+
                 when(earthquakeCollection.saveAll(eq(efc.getFeatures()))).thenReturn(savedEfc.getFeatures());
+                when(mockEarthquakeQueryService.getJSON(eq("100"),eq("1.5"))).thenReturn(efcAsJson);
                 
-
                 // act
-                MvcResult response = mockMvc.perform(
-                                post("/api/earthquakes/retrieve?distance=100&minMag=1.5")
-                                                .with(csrf()))
-                                .andExpect(status().isOk())
-                                .andReturn();
+                MvcResult response = mockMvc.perform(post("/api/earthquakes/retrieve?distance=100&minMag=1.5").with(csrf()))
+                                        .andExpect(status().isOk()).andReturn();
 
+                                        
                 // assert
-
                 verify(mockEarthquakeQueryService, times(1)).getJSON(eq("100"),eq("1.5"));
-                verify(earthquakeCollection, times(1)).saveAll(eq(efc.getFeatures()));
+                verify(earthquakeCollection, times(1)).saveAll(eq(AFTERefc.getFeatures()));
                 String responseString = response.getResponse().getContentAsString();
-                assertEquals(savedLefAsJson, responseString);
+                assertEquals(AFTERsavedLefAsJson, responseString);
         }
         
         @WithMockUser(roles = { "ADMIN", "USER" })

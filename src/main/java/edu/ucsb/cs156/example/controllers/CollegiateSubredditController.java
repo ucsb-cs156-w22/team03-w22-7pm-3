@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nimbusds.oauth2.sdk.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -59,7 +60,7 @@ public class CollegiateSubredditController extends ApiController{
     }
 
     @ApiOperation(value = "Create a new CollegiateSubreddit.")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/post")
     public CollegiateSubreddit postCollegiateSubreddit(
             @ApiParam("Enter name:") @RequestParam String name,
@@ -78,7 +79,7 @@ public class CollegiateSubredditController extends ApiController{
     }
 
     @ApiOperation(value = "Get a single record by its ID.")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("")
     public ResponseEntity<String> getRecordById(
         @ApiParam("id") @RequestParam Long id) throws JsonProcessingException {
@@ -95,21 +96,8 @@ public class CollegiateSubredditController extends ApiController{
         return ResponseEntity.ok().body(body);
     }
 
-    public RecordOrError doesRecordExist(RecordOrError roe) {
-        Optional<CollegiateSubreddit> optionalRecord = collegiateSubredditRepository.findById(roe.id);
-
-        if(optionalRecord.isEmpty()) {
-            roe.error = ResponseEntity
-            .badRequest()
-            .body(String.format("record %d not found", roe.id));
-        }else{
-            roe.record = optionalRecord.get();
-        }
-        return roe;
-    }
-
     @ApiOperation(value = "Delete a record by ID")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("")
     public ResponseEntity<String> deleteTodo(
             @ApiParam("id") @RequestParam Long id) {
@@ -127,10 +115,10 @@ public class CollegiateSubredditController extends ApiController{
 
     }
 
-    @ApiOperation(value = "Update a single record.")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @ApiOperation(value = "Update a single subreddit")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("")
-    public ResponseEntity<String> putRecordById_admin(
+    public ResponseEntity<String> updateCollegiateSubreddit(
             @ApiParam("id") @RequestParam Long id,
             @RequestBody @Valid CollegiateSubreddit incomingRecord) throws JsonProcessingException {
         // loggingService.logMethod();
@@ -145,10 +133,28 @@ public class CollegiateSubredditController extends ApiController{
         // Even the admin can't change the user; they can change other details
         // but not that.
 
-        collegiateSubredditRepository.save(incomingRecord);
+        CollegiateSubreddit oldSubreddit = roe.record;
+
+        oldSubreddit.setLocation(incomingRecord.getLocation());
+        oldSubreddit.setName(incomingRecord.getName());
+        oldSubreddit.setSubreddit(incomingRecord.getSubreddit());
+
+        collegiateSubredditRepository.save(oldSubreddit);
 
         String body = mapper.writeValueAsString(incomingRecord);
         return ResponseEntity.ok().body(body);
     }
 
+    public RecordOrError doesRecordExist(RecordOrError roe) {
+        Optional<CollegiateSubreddit> optionalRecord = collegiateSubredditRepository.findById(roe.id);
+
+        if(optionalRecord.isEmpty()) {
+            roe.error = ResponseEntity
+            .badRequest()
+            .body(String.format("record %d not found", roe.id));
+        }else{
+            roe.record = optionalRecord.get();
+        }
+        return roe;
+    }
 }

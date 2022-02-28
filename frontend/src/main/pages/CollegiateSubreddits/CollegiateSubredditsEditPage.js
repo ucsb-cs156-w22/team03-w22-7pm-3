@@ -29,6 +29,7 @@ export default function CollegiateSubredditsEditPage() {
       id: subreddit.id,
     },
     data: {
+      id: subreddit.id,
       name: subreddit.name,
       location: subreddit.location,
       subreddit: subreddit.subreddit

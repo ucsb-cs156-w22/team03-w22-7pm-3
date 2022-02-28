@@ -157,6 +157,7 @@ describe("CollegiateSubredditsEditPage tests", () => {
             expect(axiosMock.history.put.length).toBe(1); // times called
             expect(axiosMock.history.put[0].params).toEqual({ id: 17 });
             expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
+                id: 17,
                 name: 'California State University',
                 location: "Sacramento, California",
                 subreddit: "CSUReddit"

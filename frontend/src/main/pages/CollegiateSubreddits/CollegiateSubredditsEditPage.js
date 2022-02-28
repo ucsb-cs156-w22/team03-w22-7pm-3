@@ -58,7 +58,7 @@ export default function CollegiateSubredditsEditPage() {
 
   return (
     <BasicLayout>
-      <div className="pt-3">
+      <div className="pt-2">
         <h1>Edit CollegiateSubreddit</h1>
         {subreddit &&
           <CollegiateSubredditForm initialCollegiateSubreddit={subreddit} submitAction={onSubmit} buttonLabel="Update" />

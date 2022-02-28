@@ -106,6 +106,7 @@ function App() {
         {
           hasRole(currentUser, "ROLE_ADMIN") && (
             <>
+              <Route exact path="/collegiatesubreddits/edit/:id" element={<CollegiateSubredditsEditPage />} />
               <Route exact path="/collegiatesubreddits/create" element={<CollegiateSubredditsCreatePage />} />
             </>
           )

@@ -119,9 +119,6 @@ describe("CollegiateSubredditsEditPage tests", () => {
         });
 
         test("Changes when you click Update", async () => {
-
-
-
             const { getByTestId } = render(
                 <QueryClientProvider client={queryClient}>
                     <MemoryRouter>

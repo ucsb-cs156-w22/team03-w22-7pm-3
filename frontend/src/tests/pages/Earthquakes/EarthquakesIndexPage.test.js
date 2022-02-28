@@ -10,6 +10,16 @@ import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import mockConsole from "jest-mock-console";
 
+const mockToast = jest.fn();
+jest.mock('react-toastify', () => {
+    const originalModule = jest.requireActual('react-toastify');
+    return {
+        __esModule: true,
+        ...originalModule,
+        toast: (x) => mockToast(x)
+    };
+});
+
 describe("EarthquakesIndexPage tests", () => {
 
     const axiosMock =new AxiosMockAdapter(axios);
@@ -62,7 +72,7 @@ describe("EarthquakesIndexPage tests", () => {
 
     });
 
-    test("renders two earthquakes without crashing for regular user", async () => {
+    test("renders three earthquakes without crashing for regular user", async () => {
         setupUserOnly();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/earthquakes/all").reply(200, earthquakesFixtures.threeEarthquakes);
@@ -79,7 +89,7 @@ describe("EarthquakesIndexPage tests", () => {
         expect(getByTestId(`${testId}-cell-row-1-col-title`)).toHaveTextContent("M 2.2 - 10km ESE of Ojai, CA");
     });
 
-    test("renders two earthquakes without crashing for admin user", async () => {
+    test("renders three earthquakes without crashing for admin user", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/earthquakes/all").reply(200, earthquakesFixtures.threeEarthquakes);
@@ -121,6 +131,22 @@ describe("EarthquakesIndexPage tests", () => {
         expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
+    test("purge buttom invisible to regular users", async () => {
+        setupUserOnly();
+
+        const queryClient = new QueryClient();
+
+        const { queryByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <EarthquakesIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        expect(queryByTestId('purge-button')).not.toBeInTheDocument();
+    });
+
 	test("purge buttom successfully delete all EQs, admin only", async() => {
 		setupAdminUser();
 		const queryClient = new QueryClient();
@@ -138,13 +164,14 @@ describe("EarthquakesIndexPage tests", () => {
                 </MemoryRouter>
             </QueryClientProvider>
         );
-		await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
-		expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
+		await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-title`)).toBeInTheDocument(); });
+		expect(getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("M 2.2 - 10km ESE of Ojai, CA");
 
         const purgeButton = getByTestId('purge-button');
         expect(purgeButton).toBeInTheDocument();
 		fireEvent.click(purgeButton);
-        await waitFor(() => { expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument(); });
+		await waitFor(() => { expect(mockToast).toBeCalledWith("All earthquakes from the earthquake collection deleted."); });
+        await waitFor(() => { expect(queryByTestId(`${testId}-cell-row-0-col-title`)).not.toBeInTheDocument(); });
 	});
 
 });

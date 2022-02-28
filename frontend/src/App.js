@@ -25,7 +25,7 @@ import UCSBSubjectsIndexPage from "main/pages/UCSBSubjects/UCSBSubjectsIndexPage
 import UCSBSubjectsCreatePage from "main/pages/UCSBSubjects/UCSBSubjectsCreatePage";
 
 import EarthquakesIndexPage from "main/pages/Earthquakes/EarthquakesIndexPage";
-import EarthquakesCreatePage from "main/pages/Earthquakes/EarthquakesCreatePage";
+import EarthquakesRetrievePage from "main/pages/Earthquakes/EarthquakesRetrievePage";
 
 function App() {
 
@@ -108,7 +108,7 @@ function App() {
         {
           hasRole(currentUser, "ROLE_ADMIN") && (
             <>
-              <Route exact path="/earthquakes/retrieve" element={<EarthquakesCreatePage />}/>
+              <Route exact path="/earthquakes/retrieve" element={<EarthquakesRetrievePage />}/>
             </>
           )
         }

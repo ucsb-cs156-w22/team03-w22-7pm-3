@@ -66,7 +66,7 @@ describe("EarthquakesRetrievePage tests", () => {
             minMag: "0.5"
         };
 
-        axiosMock.onGet("/api/earthquakes/retrieve").reply( 202, earthquake );
+        axiosMock.onGet("/api/earthquakes/retrieve").reply( 202,  earthquake);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
@@ -93,7 +93,7 @@ describe("EarthquakesRetrievePage tests", () => {
 
         await waitFor(() => expect(axiosMock.history.get.length).toBe(3));
 
-        expect(axiosMock.history.get[0].params).toEqual(
+        expect(axiosMock.history.get[2].params).toEqual(
             {
             "distance": "0.1",
             "minMag": "0.5"

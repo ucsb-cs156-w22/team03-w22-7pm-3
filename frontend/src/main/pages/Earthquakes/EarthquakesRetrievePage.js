@@ -8,19 +8,19 @@ import { toast } from "react-toastify";
 export default function EarthquakesRetrievePage() {
     let { id } = useParams();
 
-    const { data: Earthquakes, error: error, status: status } =
-      useBackend(
-        // Stryker disable next-line all : don't test internal caching of React Query
-        [`/api/earthquakes/all`],
-        {  // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
-          method: "GET",
-          url: `/api/earthquakes/retrieve`,
-          params: {
-            distance: Earthquakes.distance,
-            minMag: Earthquakes.minMag
-          }
-        }
-      );
+    // const { data: Earthquakes, error: error, status: status } =
+    //   useBackend(
+    //     // Stryker disable next-line all : don't test internal caching of React Query
+    //     [`/api/earthquakes/all`],
+    //     {  // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
+    //       method: "GET",
+    //       url: `/api/earthquakes/retrieve`,
+    //       params: {
+    //         distance: Earthquakes.distance,
+    //         minMag: Earthquakes.minMag
+    //       }
+    //     }
+    //   );
   
   
     const objectToAxiosPutParams = (Earthquakes) => ({
@@ -57,7 +57,7 @@ export default function EarthquakesRetrievePage() {
       <BasicLayout>
         <div className="pt-2">
           <h1>Earthquakes Retrieved</h1>
-          {Earthquakes &&
+          {
             <EarthquakesForm submitAction={onSubmit}/>
           }
         </div>

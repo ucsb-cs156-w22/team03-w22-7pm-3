@@ -80,6 +80,7 @@ public class UCSBSubjectController extends ApiController {
         subject.setCollegeCode(collegeCode);
         subject.setRelatedDeptCode(relatedDeptCode);
         subject.setInactive(inactive);
+
         UCSBSubject savedSubject = ucsbSubjectRepository.save(subject);
         return savedSubject;
     }
@@ -140,6 +141,13 @@ public class UCSBSubjectController extends ApiController {
         oldSubject.setRelatedDeptCode(incomingUCSBSubject.getRelatedDeptCode());
         oldSubject.setInactive(incomingUCSBSubject.isInactive());
 
+        
+        if (incomingUCSBSubject.isInactive()) {
+            oldSubject.setInactive(true);
+        } else {
+            oldSubject.setInactive(false);
+        }
+            
         ucsbSubjectRepository.save(oldSubject);
 
         String body = mapper.writeValueAsString(oldSubject);

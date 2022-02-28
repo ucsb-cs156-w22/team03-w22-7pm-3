@@ -47,7 +47,7 @@ public class EarthquakeController extends ApiController {
     @ApiOperation(value = "List all earthquakes")
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/all")
-    public Iterable<EarthquakeFeature> allStudents() {
+    public Iterable<EarthquakeFeature> allEarthquakes() {
         Iterable<EarthquakeFeature> earthquakes = earthquakeCollection.findAll();
         return earthquakes;
     }
@@ -71,5 +71,15 @@ public class EarthquakeController extends ApiController {
 
         return ResponseEntity.ok().body(features);
     }
+
+    @ApiOperation(value = "Deletes all earthquakes from the earthquakes collection")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("/purge")
+    public ResponseEntity<String> deleteEarthquakes() {
+        earthquakeCollection.deleteAll();
+        return ResponseEntity.ok().body(String.format("All earthquakes from the earthquake collection deleted."));
+    }
+        
+    
 
 }

@@ -187,6 +187,50 @@ public class UCSBSubjectControllerTests extends ControllerTestCase {
         assertEquals(requestBody, responseString);
     }
 
+        // written in by Michael G. for team03 after fixing edit() in UCSBSubjectController.java
+        @WithMockUser(roles = { "ADMIN", "USER" })
+        @Test
+        public void admin_can_edit_an_existing_ucsbsubject_but_inactive_becomes_true() throws Exception {
+            // arrange
+    
+            UCSBSubject ucsbSubjectOrig = UCSBSubject.builder()
+                            .subjectCode("testSubjectCode")
+                            .subjectTranslation("testSubjectTranslation")
+                            .deptCode("testDeptCode")
+                            .collegeCode("testCollegeCode")
+                            .relatedDeptCode("testRelatedDeptCode")
+                            .inactive(false)
+                            .build();
+            
+            UCSBSubject ucsbSubjectEdited = UCSBSubject.builder()
+                            .subjectCode("testSubjectCode")
+                            .subjectTranslation("testSubjectTranslation")
+                            .deptCode("testDeptCode")
+                            .collegeCode("testCollegeCode")
+                            .relatedDeptCode("testRelatedDeptCode")
+                            .inactive(true)
+                            .build();
+            
+            String requestBody = mapper.writeValueAsString(ucsbSubjectEdited);
+    
+            when(ucsbSubjectRepository.findById(eq(67L))).thenReturn(Optional.of(ucsbSubjectOrig));
+    
+            // act
+            MvcResult response = mockMvc.perform(
+                            put("/api/ucsbsubjects?id=67")
+                                            .contentType(MediaType.APPLICATION_JSON)
+                                            .characterEncoding("utf-8")
+                                            .content(requestBody)
+                                            .with(csrf()))
+                            .andExpect(status().isOk()).andReturn();
+    
+            // assert
+            verify(ucsbSubjectRepository, times(1)).findById(67L);
+            verify(ucsbSubjectRepository, times(1)).save(ucsbSubjectEdited); // should be saved with correct user
+            String responseString = response.getResponse().getContentAsString();
+            assertEquals(requestBody, responseString);
+        }
+
     @WithMockUser(roles = { "ADMIN", "USER" })
     @Test
     public void admin_cannot_edit_ucsbdate_that_does_not_exist() throws Exception {
@@ -201,6 +245,7 @@ public class UCSBSubjectControllerTests extends ControllerTestCase {
                         .build();
 
         String requestBody = mapper.writeValueAsString(ucsbEditedSubject);
+
 
         when(ucsbSubjectRepository.findById(eq(67L))).thenReturn(Optional.empty());
 

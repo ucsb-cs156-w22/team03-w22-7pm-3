@@ -160,5 +160,18 @@ public class EarthquakeControllerTests extends ControllerTestCase {
                 String responseString = response.getResponse().getContentAsString();
                 assertEquals(savedLefAsJson, responseString);
         }
+        
+        @WithMockUser(roles = { "ADMIN", "USER" })
+        @Test
+        public void admin_can_purge() throws Exception {
+                MvcResult response = mockMvc.perform(post("/api/earthquakes/purge")
+                                                        .with(csrf()))
+                                                .andExpect(status().isOk())
+                                                .andReturn();
 
+                // assert
+                verify(earthquakeCollection, times(1)).deleteAll();
+                String responseString = response.getResponse().getContentAsString();
+                assertEquals("All earthquakes from the earthquake collection deleted.", responseString);
+        }
 }

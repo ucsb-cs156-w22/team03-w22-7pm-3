@@ -25,6 +25,7 @@ import { hasRole, useCurrentUser } from "main/utils/currentUser";
 import "bootstrap/dist/css/bootstrap.css";
 import UCSBSubjectsIndexPage from "main/pages/UCSBSubjects/UCSBSubjectsIndexPage";
 import UCSBSubjectsCreatePage from "main/pages/UCSBSubjects/UCSBSubjectsCreatePage";
+import UCSBSubjectsEditPage from "main/pages/UCSBSubjects/UCSBSubjectsEditPage";
 
 
 function App() {
@@ -82,7 +83,6 @@ function App() {
         }
 
         {
-          //added by Thomas
           hasRole(currentUser, "ROLE_USER") && (
             <>
               <Route exact path="/ucsbsubjects/list" element={<UCSBSubjectsIndexPage />}/>
@@ -90,9 +90,9 @@ function App() {
           )
         }
         {
-          //added by Thomas
           hasRole(currentUser, "ROLE_ADMIN") && (
             <>
+              <Route exact path="/ucsbsubjects/edit/:id" element={<UCSBSubjectsEditPage />} />
               <Route exact path="/ucsbsubjects/create" element={<UCSBSubjectsCreatePage />}/>
             </>
           )

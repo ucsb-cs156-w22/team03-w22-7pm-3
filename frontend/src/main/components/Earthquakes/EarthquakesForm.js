@@ -3,20 +3,20 @@ import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-function EarthquakesForm({ submitAction, buttonLabel="Retrieve" }) {
+function EarthquakesForm({initialEarthquake, submitAction, buttonLabel="Retrieve" }) {
     // Stryker disable all
     const {
         register,
         formState: { errors },
         handleSubmit,
     } = useForm(
-        // { defaultValues: initialEarthquake || {}, }
+        { defaultValues: initialEarthquake || {}, }
     );
     // Stryker enable all
 
     const navigate = useNavigate();
 
-    const invalid_regex = /((true)|(false))/;
+    // const invalid_regex = /((true)|(false))/;
 
     return (
 
@@ -29,7 +29,7 @@ function EarthquakesForm({ submitAction, buttonLabel="Retrieve" }) {
                     id="distance"
                     type="text"
                     isInvalid={Boolean(errors.distance)}
-                    {...register("distance", { required: true, pattern: invalid_regex})}
+                    {...register("distance", { required: 'distance is required.'})}
                 />
                 <Form.Control.Feedback type="invalid">
                     {errors.distance && 'Distance is required.'}
@@ -42,7 +42,7 @@ function EarthquakesForm({ submitAction, buttonLabel="Retrieve" }) {
                     id="minMag"
                     type="text"
                     isInvalid={Boolean(errors.minMag)}
-                    {...register("minMag", { required: true, pattern: invalid_regex})}
+                    {...register("minMag", { required: 'minMag is required.'})}
                 />
                 <Form.Control.Feedback type="invalid">
                     {errors.minMag && 'Minimum magnitude is required.'}
@@ -50,8 +50,8 @@ function EarthquakesForm({ submitAction, buttonLabel="Retrieve" }) {
             </Form.Group>               
             
             <Button
-                type="submit"
-                data-testid="EarthquakesForm-submit"
+                type="retrieve"
+                data-testid="EarthquakesForm-retrieve"
             >
                 {buttonLabel}
             </Button>

@@ -18,8 +18,9 @@ describe("EarthquakesForm tests", () => {
                 <EarthquakesForm />
             </Router>
         );
-        await waitFor(() => expect(getByText(/Distance from UCSB's Storke Tower (in km)/)).toBeInTheDocument());
+        await waitFor(() => expect(getByText(/Distance from UCSB's Storke Tower \(in km\)/)).toBeInTheDocument());
         await waitFor(() => expect(getByText(/Minimum magnitude/)).toBeInTheDocument());
+        await waitFor(() => expect(getByText(/Retrieve/)).toBeInTheDocument());
     });
 
     test("Correct Error messsages on missing input", async () => {
@@ -29,8 +30,8 @@ describe("EarthquakesForm tests", () => {
                 <EarthquakesForm />
             </Router>
         );
-        await waitFor(() => expect(getByTestId("EarthquakesForm-submit")).toBeInTheDocument());
-        const submitButton = getByTestId("EarthquakesForm-submit");
+        await waitFor(() => expect(getByTestId("EarthquakesForm-retrieve")).toBeInTheDocument());
+        const submitButton = getByTestId("EarthquakesForm-retrieve");
 
         fireEvent.click(submitButton);
 
@@ -52,7 +53,7 @@ describe("EarthquakesForm tests", () => {
 
         const distanceField = getByTestId("EarthquakesForm-distance");
         const minMagField = getByTestId("EarthquakesForm-minMag");
-        const submitButton = getByTestId("EarthquakesForm-submit");
+        const submitButton = getByTestId("EarthquakesForm-retrieve");
         
 
         fireEvent.change(distanceField, { target: { value: '100' } });

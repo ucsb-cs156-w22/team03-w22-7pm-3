@@ -91,7 +91,7 @@ public class CollegiateSubredditControllerTests extends ControllerTestCase {
         assertEquals(expectedJson, responseString);
     }
 
-    @WithMockUser(roles = { "ADMIN" })
+    @WithMockUser(roles = { "USER" })
     @Test
     public void api_collegiate_subreddits_post__user_logged_in() throws Exception {
         // arrange

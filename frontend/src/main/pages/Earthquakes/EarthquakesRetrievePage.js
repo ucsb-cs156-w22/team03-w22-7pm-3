@@ -56,7 +56,7 @@ export default function EarthquakesRetrievePage() {
     return (
       <BasicLayout>
         <div className="pt-2">
-          <h1>Earthquakes Retrieved</h1>
+          <h1>Retrieve Earthquakes</h1>
           {
             <EarthquakesForm submitAction={onSubmit}/>
           }

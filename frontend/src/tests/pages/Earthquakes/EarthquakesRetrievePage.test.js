@@ -43,9 +43,8 @@ describe("EarthquakesRetrievePage tests", () => {
     });
 
     test("renders without crashing for regular user", () => {
-        //setupUserOnly();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/earthquakes/all").reply(200, []);
+        //axiosMock.onGet("/api/earthquakes/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -61,12 +60,12 @@ describe("EarthquakesRetrievePage tests", () => {
     test("when you fill in the form and hit submit, it makes a request to the backend", async () => {
 
         const queryClient = new QueryClient();
-        const earthquake = {
-            distance: "0.1",
-            minMag: "0.5"
-        };
+        const earthquake = {"type":"FeatureCollection","metadata":{"generated":1646095080000,
+            "url":"https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_hour.geojson","title":"USGS Magnitude 4.5+ Earthquakes, Past Hour",
+            "status":200,"api":"1.10.3","count":0},"features":[]};
+        
 
-        axiosMock.onGet("/api/earthquakes/retrieve").reply( 202,  earthquake);
+        axiosMock.onGet("/api/earthquakes/retrieve").reply( 202, earthquake);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
@@ -84,8 +83,8 @@ describe("EarthquakesRetrievePage tests", () => {
         const minMagField = getByTestId("EarthquakesForm-minMag");
         const retrieveButton = getByTestId("EarthquakesForm-retrieve");
 
-        fireEvent.change(distanceField, { target: { value: '0.1' } });
-        fireEvent.change(minMagField, { target: { value: '0.5' } });
+        fireEvent.change(distanceField, { target: { value: '1' } });
+        fireEvent.change(minMagField, { target: { value: '1' } });
 
         expect(retrieveButton).toBeInTheDocument();
 
@@ -95,42 +94,11 @@ describe("EarthquakesRetrievePage tests", () => {
 
         expect(axiosMock.history.get[2].params).toEqual(
             {
-            "distance": "0.1",
-            "minMag": "0.5"
+            "distance": "1",
+            "minMag": "1"
         });
 
         expect(mockToast).toBeCalledWith("0 Earthquakes retrieved");
         expect(mockNavigate).toBeCalledWith({ "to": "/earthquakes/list" });
     });
-
-    // test("test what happens when you click delete, admin", async () => {
-    //     setupAdminUser();
-
-    //     const queryClient = new QueryClient();
-    //     axiosMock.onGet("/api/ucsbsubjects/all").reply(200, ucsbSubjectsFixtures.threeSubjects);
-    //     axiosMock.onDelete("/api/ucsbsubjects").reply(200, "UCSBSubject with id 1 was deleted");
-
-
-    //     const { getByTestId } = render(
-    //         <QueryClientProvider client={queryClient}>
-    //             <MemoryRouter>
-    //                 <UCSBSubjectsIndexPage />
-    //             </MemoryRouter>
-    //         </QueryClientProvider>
-    //     );
-
-    //     await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
-
-    //    expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1"); 
-
-
-    //     const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
-    //     expect(deleteButton).toBeInTheDocument();
-       
-    //     fireEvent.click(deleteButton);
-
-    //     await waitFor(() => { expect(mockToast).toBeCalledWith("UCSBSubject with id 1 was deleted") });
-
-    // });
-
 });

@@ -10,12 +10,12 @@ export default function UCSBSubjectsCreatePage() {
     url: "/api/ucsbsubjects/post",
     method: "POST",
     params: {
-      inactive: String(ucsbSubject.inactive),
       subjectCode: ucsbSubject.subjectCode,
       subjectTranslation: ucsbSubject.subjectTranslation,
       deptCode: ucsbSubject.deptCode,
       collegeCode: ucsbSubject.collegeCode,
-      relatedDeptCode: ucsbSubject.relatedDeptCode
+      relatedDeptCode: ucsbSubject.relatedDeptCode,
+      inactive: ucsbSubject.inactive
     }
   });
 

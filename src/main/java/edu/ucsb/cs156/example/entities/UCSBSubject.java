@@ -20,10 +20,10 @@ public class UCSBSubject {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
-  private boolean inactive;
   private String subjectCode;
   private String subjectTranslation;
   private String deptCode;
   private String collegeCode;
   private String relatedDeptCode;
+  private boolean inactive;
 }

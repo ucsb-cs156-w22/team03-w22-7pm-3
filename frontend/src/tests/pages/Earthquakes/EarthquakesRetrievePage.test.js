@@ -60,12 +60,17 @@ describe("EarthquakesRetrievePage tests", () => {
     test("when you fill in the form and hit submit, it makes a request to the backend", async () => {
 
         const queryClient = new QueryClient();
-        const earthquake = {"type":"FeatureCollection","metadata":{"generated":1646095080000,
-            "url":"https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_hour.geojson","title":"USGS Magnitude 4.5+ Earthquakes, Past Hour",
-            "status":200,"api":"1.10.3","count":0},"features":[]};
+        // const earthquake = {"type":"FeatureCollection","metadata":{"generated":1646095080000,
+        //     "url":"https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_hour.geojson","title":"USGS Magnitude 4.5+ Earthquakes, Past Hour",
+        //     "status":200,"api":"1.10.3","count":0},"features":[]};
         
+        const earthquake = {
+            distance: 1,
+            minMag: 1,
+            length: 1
+        };
 
-        axiosMock.onGet("/api/earthquakes/retrieve").reply( 202, earthquake);
+        axiosMock.onPost("/api/earthquakes/retrieve").reply( 202, earthquake);
 
         const { getByTestId } = render(
             <QueryClientProvider client={queryClient}>
@@ -90,15 +95,15 @@ describe("EarthquakesRetrievePage tests", () => {
 
         fireEvent.click(retrieveButton);
 
-        await waitFor(() => expect(axiosMock.history.get.length).toBe(3));
+        await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
 
-        expect(axiosMock.history.get[2].params).toEqual(
+        expect(axiosMock.history.post[0].params).toEqual(
             {
             "distance": "1",
             "minMag": "1"
         });
 
-        expect(mockToast).toBeCalledWith("0 Earthquakes retrieved");
+        expect(mockToast).toBeCalledWith("1 Earthquakes retrieved");
         expect(mockNavigate).toBeCalledWith({ "to": "/earthquakes/list" });
     });
 });

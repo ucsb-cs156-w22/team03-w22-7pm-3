@@ -6,26 +6,10 @@ import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 
 export default function EarthquakesRetrievePage() {
-    let { id } = useParams();
 
-    // const { data: Earthquakes, error: error, status: status } =
-    //   useBackend(
-    //     // Stryker disable next-line all : don't test internal caching of React Query
-    //     [`/api/earthquakes/all`],
-    //     {  // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
-    //       method: "GET",
-    //       url: `/api/earthquakes/retrieve`,
-    //       params: {
-    //         distance: Earthquakes.distance,
-    //         minMag: Earthquakes.minMag
-    //       }
-    //     }
-    //   );
-  
-  
     const objectToAxiosPutParams = (Earthquakes) => ({
       url: "/api/earthquakes/retrieve",
-      //method: "GET",
+      method: "POST",
       params: {
         distance: Earthquakes.distance,
         minMag: Earthquakes.minMag
@@ -33,7 +17,7 @@ export default function EarthquakesRetrievePage() {
     });
   
     const onSuccess = (Earthquakes) => {
-      toast(`${Earthquakes.metadata.count} Earthquakes retrieved`);
+      toast(`${Earthquakes.length} Earthquakes retrieved`);
     }
   
     const mutation = useBackendMutation(

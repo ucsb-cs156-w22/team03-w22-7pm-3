@@ -11,7 +11,7 @@ function Purge()
 {
 	const purge = useBackendMutation(
 		() => ({ url: "/api/earthquakes/purge", method: "POST" }),
-		{ onSuccess: () => { toast("All earthquakes from the earthquake collection deleted."); } },
+		{ onSuccess: () => { toast("All earthquakes have been deleted."); } },
 		// Stryker disable next-line all : don't test internal caching of React Query
 		["/api/earthquakes/all"],
   	);

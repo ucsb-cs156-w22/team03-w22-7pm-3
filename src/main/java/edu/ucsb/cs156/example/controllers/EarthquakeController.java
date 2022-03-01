@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -77,9 +78,7 @@ public class EarthquakeController extends ApiController {
     @PostMapping("/purge")
     public ResponseEntity<String> deleteEarthquakes() {
         earthquakeCollection.deleteAll();
-        return ResponseEntity.ok().body(String.format("All earthquakes from the earthquake collection deleted."));
+        return ResponseEntity.ok().body(String.format("All earthquakes have been deleted."));
     }
-        
-    
 
 }

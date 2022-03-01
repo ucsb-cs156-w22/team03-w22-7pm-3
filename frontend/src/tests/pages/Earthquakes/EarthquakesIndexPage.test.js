@@ -172,7 +172,7 @@ describe("EarthquakesIndexPage tests", () => {
         const purgeButton = getByTestId('purge-button');
         expect(purgeButton).toBeInTheDocument();
 		fireEvent.click(purgeButton);
-		await waitFor(() => { expect(mockToast).toBeCalledWith("All earthquakes from the earthquake collection deleted."); });
+		await waitFor(() => { expect(mockToast).toBeCalledWith("All earthquakes have been deleted."); });
         await waitFor(() => { expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument(); });
 	});
 

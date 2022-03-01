@@ -25,7 +25,7 @@ export default function EarthquakesRetrievePage() {
   
     const objectToAxiosPutParams = (Earthquakes) => ({
       url: "/api/earthquakes/retrieve",
-      //method: "GET",
+      method: "GET",
       params: {
         distance: Earthquakes.distance,
         minMag: Earthquakes.minMag

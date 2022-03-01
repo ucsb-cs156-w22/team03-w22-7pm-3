@@ -116,7 +116,11 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                     <NavDropdown.Item href="/earthquakes/list" data-testid="appnavbar-earthquakes-list">List Earthquakes</NavDropdown.Item>
                     {
                       hasRole(currentUser, "ROLE_ADMIN") && (
+<<<<<<< HEAD
                         <NavDropdown.Item href="/earthquakes/retrieve" data-testid="appnavbar-earthquakes-retrieve">Retrieve Earthquakes</NavDropdown.Item>
+=======
+                        <NavDropdown.Item href="/earthquakes/retrieve" data-testid="appnavbar-earthquakes-retrieve">Create Earthquake</NavDropdown.Item>
+>>>>>>> 7b21afd (finished writing code for earthquake menu and page placeholders, and the tests for these placeholders.)
                       )
                     }
                   </NavDropdown>

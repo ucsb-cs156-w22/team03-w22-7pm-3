@@ -162,7 +162,7 @@ describe("UCSBSubjectsEditPage tests", () => {
             fireEvent.change(deptCodeField, { target: { value: 'dc' } });
             fireEvent.change(collegeCodeField, { target: { value: 'cc' } });
             fireEvent.change(relatedDeptCodeField, { target: { value: 'rdc' } });
-            fireEvent.change(inactiveField, { target: { value: 'true' } });
+            fireEvent.change(inactiveField, { target: { value: true } });
 
             fireEvent.click(submitButton);
 

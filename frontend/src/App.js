@@ -26,10 +26,14 @@ import UCSBSubjectsCreatePage from "main/pages/UCSBSubjects/UCSBSubjectsCreatePa
 
 import EarthquakesIndexPage from "main/pages/Earthquakes/EarthquakesIndexPage";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import EarthquakesRetrievePage from "main/pages/Earthquakes/EarthquakesRetrievePage";
 =======
 import EarthquakesCreatePage from "main/pages/Earthquakes/EarthquakesCreatePage";
 >>>>>>> 7b21afd (finished writing code for earthquake menu and page placeholders, and the tests for these placeholders.)
+=======
+import EarthquakesRetrievePage from "main/pages/Earthquakes/EarthquakesRetrievePage";
+>>>>>>> e087700 (Changed create to retrieve)
 
 function App() {
 
@@ -113,10 +117,14 @@ function App() {
           hasRole(currentUser, "ROLE_ADMIN") && (
             <>
 <<<<<<< HEAD
+<<<<<<< HEAD
               <Route exact path="/earthquakes/retrieve" element={<EarthquakesRetrievePage />}/>
 =======
               <Route exact path="/earthquakes/retrieve" element={<EarthquakesCreatePage />}/>
 >>>>>>> 7b21afd (finished writing code for earthquake menu and page placeholders, and the tests for these placeholders.)
+=======
+              <Route exact path="/earthquakes/retrieve" element={<EarthquakesRetrievePage />}/>
+>>>>>>> e087700 (Changed create to retrieve)
             </>
           )
         }

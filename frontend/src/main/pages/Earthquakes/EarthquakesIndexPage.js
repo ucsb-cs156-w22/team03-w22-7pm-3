@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 
 function Purge()
 {
-	let purge = useBackendMutation(
+	const purge = useBackendMutation(
 		() => ({ url: "/api/earthquakes/purge", method: "POST" }),
 		{ onSuccess: () => { toast("All earthquakes from the earthquake collection deleted."); } },
 		// Stryker disable next-line all : don't test internal caching of React Query

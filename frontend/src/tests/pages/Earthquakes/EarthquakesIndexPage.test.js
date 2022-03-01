@@ -85,8 +85,9 @@ describe("EarthquakesIndexPage tests", () => {
             </QueryClientProvider>
         );
 
-        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("M 2.2 - 10km ESE of Ojai, CA"); });
-        expect(getByTestId(`${testId}-cell-row-1-col-title`)).toHaveTextContent("M 2.2 - 10km ESE of Ojai, CA");
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("abcd1234abcd1234abcd1234abcd1234"); });
+        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("abcd1234abcd1234abcd1234abcd1234");
+        expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("abcd1234abcd1234abcd1234abcd1234");
     });
 
     test("renders three earthquakes without crashing for admin user", async () => {
@@ -102,8 +103,9 @@ describe("EarthquakesIndexPage tests", () => {
             </QueryClientProvider>
         );
 
-        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("M 2.2 - 10km ESE of Ojai, CA"); });
-        expect(getByTestId(`${testId}-cell-row-1-col-title`)).toHaveTextContent("M 2.2 - 10km ESE of Ojai, CA");
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("abcd1234abcd1234abcd1234abcd1234"); });
+        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("abcd1234abcd1234abcd1234abcd1234");
+        expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("abcd1234abcd1234abcd1234abcd1234");
     });
 
     test("renders empty table when backend unavailable, user only", async () => {
@@ -164,14 +166,14 @@ describe("EarthquakesIndexPage tests", () => {
                 </MemoryRouter>
             </QueryClientProvider>
         );
-		await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-title`)).toBeInTheDocument(); });
-		expect(getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("M 2.2 - 10km ESE of Ojai, CA");
+		await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
+		expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("abcd1234abcd1234abcd1234abcd1234");
 
         const purgeButton = getByTestId('purge-button');
         expect(purgeButton).toBeInTheDocument();
 		fireEvent.click(purgeButton);
 		await waitFor(() => { expect(mockToast).toBeCalledWith("All earthquakes from the earthquake collection deleted."); });
-        await waitFor(() => { expect(queryByTestId(`${testId}-cell-row-0-col-title`)).not.toBeInTheDocument(); });
+        await waitFor(() => { expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument(); });
 	});
 
 });

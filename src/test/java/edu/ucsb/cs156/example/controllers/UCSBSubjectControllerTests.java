@@ -246,6 +246,7 @@ public class UCSBSubjectControllerTests extends ControllerTestCase {
 
         String requestBody = mapper.writeValueAsString(ucsbEditedSubject);
 
+
         when(ucsbSubjectRepository.findById(eq(67L))).thenReturn(Optional.empty());
 
         // act

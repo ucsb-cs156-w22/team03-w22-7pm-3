@@ -139,6 +139,8 @@ public class UCSBSubjectController extends ApiController {
         oldSubject.setDeptCode(incomingUCSBSubject.getDeptCode());
         oldSubject.setCollegeCode(incomingUCSBSubject.getCollegeCode());
         oldSubject.setRelatedDeptCode(incomingUCSBSubject.getRelatedDeptCode());
+        oldSubject.setInactive(incomingUCSBSubject.isInactive());
+
         
         if (incomingUCSBSubject.isInactive()) {
             oldSubject.setInactive(true);

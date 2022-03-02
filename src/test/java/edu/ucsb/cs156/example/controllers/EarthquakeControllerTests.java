@@ -164,7 +164,7 @@ public class EarthquakeControllerTests extends ControllerTestCase {
         @WithMockUser(roles = { "ADMIN", "USER" })
         @Test
         public void admin_can_purge() throws Exception {
-                MvcResult response = mockMvc.perform(delete("/api/earthquakes/purge")
+                MvcResult response = mockMvc.perform(post("/api/earthquakes/purge")
                                                         .with(csrf()))
                                                 .andExpect(status().isOk())
                                                 .andReturn();

@@ -18,6 +18,11 @@ import StudentsCreatePage from "main/pages/Students/StudentsCreatePage";
 import CollegiateSubredditsIndexPage from "main/pages/CollegiateSubreddits/CollegiateSubredditsIndexPage";
 import CollegiateSubredditsCreatePage from "main/pages/CollegiateSubreddits/CollegiateSubredditsCreatePage";
 
+
+// import UCSBSubjectsIndexPage from "main/pages/UCSBSubjects/UCSBSubjectsIndexPage";
+// import UCSBSubjectsCreatePage from "main/pages/UCSBSubjects/UCSBSubjectsCreatePage";
+
+
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -124,6 +129,14 @@ function App() {
           hasRole(currentUser, "ROLE_ADMIN") && (
             <>
               <Route exact path="/collegiatesubreddits/create" element={<CollegiateSubredditsCreatePage />} />
+            </>
+          )
+          
+        }
+        {
+          hasRole(currentUser, "ROLE_ADMIN") && (
+            <>
+              <Route exact path="/earthquakes/retrieve" element={<EarthquakesRetrievePage/>} />
             </>
           )
         }

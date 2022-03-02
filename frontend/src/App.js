@@ -28,6 +28,7 @@ import UCSBSubjectsEditPage from "main/pages/UCSBSubjects/UCSBSubjectsEditPage";
 import EarthquakesIndexPage from "main/pages/Earthquakes/EarthquakesIndexPage";
 import EarthquakesRetrievePage from "main/pages/Earthquakes/EarthquakesRetrievePage";
 
+
 function App() {
 
   const { data: currentUser } = useCurrentUser();
@@ -121,16 +122,16 @@ function App() {
           )
         }
         {
-          hasRole(currentUser, "ROLE_ADMIN") && (
+          hasRole(currentUser, "ROLE_USER") && (
             <>
-              <Route exact path="/collegiatesubreddits/create" element={<CollegiateSubredditsCreatePage />} />
+              <Route exact path="/collegiatesubreddits/list" element={<CollegiateSubredditsIndexPage />} />
             </>
           )
         }
         {
-          hasRole(currentUser, "ROLE_USER") && (
+          hasRole(currentUser, "ROLE_ADMIN") && (
             <>
-              <Route exact path="/earthquakes/list" element={<EarthquakesIndexPage />} />
+              <Route exact path="/collegiatesubreddits/create" element={<CollegiateSubredditsCreatePage />} />
             </>
           )
         }

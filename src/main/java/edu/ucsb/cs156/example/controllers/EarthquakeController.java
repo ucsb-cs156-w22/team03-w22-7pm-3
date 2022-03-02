@@ -61,6 +61,7 @@ public class EarthquakeController extends ApiController {
         @ApiParam("distance in km, e.g. 100") @RequestParam String distance,
         @ApiParam("minimum magnitude, e.g. 2.5") @RequestParam String minMag
     ) throws JsonProcessingException {
+
         log.info("getEarthquakes: distance={} minMag={}", distance, minMag);
         String result = earthquakeQueryService.getJSON(distance, minMag);
         
@@ -68,7 +69,16 @@ public class EarthquakeController extends ApiController {
         EarthquakeFeatureCollection collection = mapper.readValue(result, EarthquakeFeatureCollection.class);
         List<EarthquakeFeature> features = collection.getFeatures();
         
-        features = earthquakeCollection.saveAll(features);
+        for(var x: features){
+            x.setTitle(x.getProperties().getTitle());
+            x.setMag(x.getProperties().getMag());
+            x.setPlace(x.getProperties().getPlace());
+            x.setTime(x.getProperties().getTime());
+            x.setUrl(x.getProperties().getUrl());
+        }
+
+
+        List<EarthquakeFeature> newfeatures = earthquakeCollection.saveAll(features);
 
         return ResponseEntity.ok().body(features);
     }

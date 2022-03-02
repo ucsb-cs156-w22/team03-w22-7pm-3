@@ -166,8 +166,10 @@ describe("EarthquakesIndexPage tests", () => {
                 </MemoryRouter>
             </QueryClientProvider>
         );
-		await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
-		expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("abcd1234abcd1234abcd1234abcd1234");
+
+		await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-_id`)).toBeInTheDocument(); });
+		expect(getByTestId(`${testId}-cell-row-0-col-_id`)).toHaveTextContent("1");
+
 
         const purgeButton = getByTestId('purge-button');
         expect(purgeButton).toBeInTheDocument();

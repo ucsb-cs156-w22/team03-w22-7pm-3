@@ -22,5 +22,11 @@ public class EarthquakeFeature {
 
     private String type;
     private EarthquakeFeatureProperties properties;
-    private String id;
+
+    // private String id;
+    private String title;
+    private double mag;
+    private String place;
+    private long time;
+    private String url;
 } 

@@ -10,4 +10,5 @@ export default {
 
 const Template = () => <EarthquakesRetrievePage />;
 
+
 export const Default = Template.bind({});

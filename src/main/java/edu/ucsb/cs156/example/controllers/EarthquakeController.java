@@ -85,7 +85,7 @@ public class EarthquakeController extends ApiController {
 
     @ApiOperation(value = "Deletes all earthquakes from the earthquakes collection")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping("/purge")
+    @PostMapping("/purge")
     public ResponseEntity<String> deleteEarthquakes() {
         earthquakeCollection.deleteAll();
         return ResponseEntity.ok().body(String.format("All earthquakes have been deleted."));

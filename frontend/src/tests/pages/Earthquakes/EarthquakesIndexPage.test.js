@@ -3,7 +3,6 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import EarthquakesIndexPage from "main/pages/Earthquakes/EarthquakesIndexPage";
 
-
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import { earthquakesFixtures } from "fixtures/earthquakesFixtures";
@@ -73,7 +72,7 @@ describe("EarthquakesIndexPage tests", () => {
 
     });
 
-    test("renders two earthquakes without crashing for regular user", async () => {
+    test("renders three earthquakes without crashing for regular user", async () => {
         setupUserOnly();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/earthquakes/all").reply(200, earthquakesFixtures.threeEarthquakes);
@@ -86,11 +85,12 @@ describe("EarthquakesIndexPage tests", () => {
             </QueryClientProvider>
         );
 
-        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("M 2.2 - 10km ESE of Ojai, CA"); });
-        expect(getByTestId(`${testId}-cell-row-1-col-title`)).toHaveTextContent("M 2.2 - 10km ESE of Ojai, CA");
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("abcd1234abcd1234abcd1234abcd1234"); });
+        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("abcd1234abcd1234abcd1234abcd1234");
+        expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("abcd1234abcd1234abcd1234abcd1234");
     });
 
-    test("renders two earthquakes without crashing for admin user", async () => {
+    test("renders three earthquakes without crashing for admin user", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/earthquakes/all").reply(200, earthquakesFixtures.threeEarthquakes);
@@ -103,8 +103,9 @@ describe("EarthquakesIndexPage tests", () => {
             </QueryClientProvider>
         );
 
-        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("M 2.2 - 10km ESE of Ojai, CA"); });
-        expect(getByTestId(`${testId}-cell-row-1-col-title`)).toHaveTextContent("M 2.2 - 10km ESE of Ojai, CA");
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("abcd1234abcd1234abcd1234abcd1234"); });
+        expect(getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("abcd1234abcd1234abcd1234abcd1234");
+        expect(getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent("abcd1234abcd1234abcd1234abcd1234");
     });
 
     test("renders empty table when backend unavailable, user only", async () => {
@@ -132,11 +133,31 @@ describe("EarthquakesIndexPage tests", () => {
         expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
+    test("purge buttom invisible to regular users", async () => {
+        setupUserOnly();
+
+        const queryClient = new QueryClient();
+
+        const { queryByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <EarthquakesIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        expect(queryByTestId('purge-button')).not.toBeInTheDocument();
+    });
+
 	test("purge buttom successfully delete all EQs, admin only", async() => {
 		setupAdminUser();
 		const queryClient = new QueryClient();
-		axiosMock.onGet("/api/earthquakes/all").reply(200, earthquakesFixtures.threeEarthquakes);
-		axiosMock.onDelete("/api/earthquakes/purge").reply(200,"All earthquakes have been deleted.");
+		axiosMock
+            .onGet("/api/earthquakes/all")
+            .replyOnce(200, earthquakesFixtures.threeEarthquakes)
+            .onGet("/api/earthquakes/all")
+            .replyOnce(200, []);
+			axiosMock.onPost("/api/earthquakes/purge").reply(200);
 
         const { getByTestId, queryByTestId } = render(
             <QueryClientProvider client={queryClient}>
@@ -145,16 +166,16 @@ describe("EarthquakesIndexPage tests", () => {
                 </MemoryRouter>
             </QueryClientProvider>
         );
+
 		await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-_id`)).toBeInTheDocument(); });
 		expect(getByTestId(`${testId}-cell-row-0-col-_id`)).toHaveTextContent("1");
 
+
         const purgeButton = getByTestId('purge-button');
         expect(purgeButton).toBeInTheDocument();
-
 		fireEvent.click(purgeButton);
-
-        await waitFor(() => {expect(mockToast).toBeCalledWith("All earthquakes have been deleted.")});
+		await waitFor(() => { expect(mockToast).toBeCalledWith("All earthquakes have been deleted."); });
+        await waitFor(() => { expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument(); });
 	});
 
 });
-
